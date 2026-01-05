@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)",
+      "Bash(npm test:*)",
+      "Bash(powershell -command \"(Get-Content ''C:/Users/gbone/flashstack/src/data/frequency.json'' | Measure-Object -Line).Lines\")",
+      "Bash(test:*)",
+      "Bash(git init:*)",
+      "Bash(ls:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "pronouns": ["yo", "tú", "él/ella/usted", "nosotros", "vosotros", "ellos/ellas/ustedes"],
+  "tenses": {
+    "present": "Present",
+    "preterite": "Preterite (Past)",
+    "future": "Future"
+  },
+  "verbs": [
+    {
+      "infinitive": "ser",
+      "english": "to be (permanent)",
+      "present": ["soy", "eres", "es", "somos", "sois", "son"],
+      "preterite": ["fui", "fuiste", "fue", "fuimos", "fuisteis", "fueron"],
+      "future": ["seré", "serás", "será", "seremos", "seréis", "serán"]
+    },
+    {
+      "infinitive": "estar",
+      "english": "to be (temporary)",
+      "present": ["estoy", "estás", "está", "estamos", "estáis", "están"],
+      "preterite": ["estuve", "estuviste", "estuvo", "estuvimos", "estuvisteis", "estuvieron"],
+      "future": ["estaré", "estarás", "estará", "estaremos", "estaréis", "estarán"]
+    },
+    {
+      "infinitive": "tener",
+      "english": "to have",
+      "present": ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"],
+      "preterite": ["tuve", "tuviste", "tuvo", "tuvimos", "tuvisteis", "tuvieron"],
+      "future": ["tendré", "tendrás", "tendrá", "tendremos", "tendréis", "tendrán"]
+    },
+    {
+      "infinitive": "ir",
+      "english": "to go",
+      "present": ["voy", "vas", "va", "vamos", "vais", "van"],
+      "preterite": ["fui", "fuiste", "fue", "fuimos", "fuisteis", "fueron"],
+      "future": ["iré", "irás", "irá", "iremos", "iréis", "irán"]
+    },
+    {
+      "infinitive": "hacer",
+      "english": "to do, to make",
+      "present": ["hago", "haces", "hace", "hacemos", "hacéis", "hacen"],
+      "preterite": ["hice", "hiciste", "hizo", "hicimos", "hicisteis", "hicieron"],
+      "future": ["haré", "harás", "hará", "haremos", "haréis", "harán"]
+    },
+    {
+      "infinitive": "poder",
+      "english": "to be able to, can",
+      "present": ["puedo", "puedes", "puede", "podemos", "podéis", "pueden"],
+      "preterite": ["pude", "pudiste", "pudo", "pudimos", "pudisteis", "pudieron"],
+      "future": ["podré", "podrás", "podrá", "podremos", "podréis", "podrán"]
+    },
+    {
+      "infinitive": "decir",
+      "english": "to say, to tell",
+      "present": ["digo", "dices", "dice", "decimos", "decís", "dicen"],
+      "preterite": ["dije", "dijiste", "dijo", "dijimos", "dijisteis", "dijeron"],
+      "future": ["diré", "dirás", "dirá", "diremos", "diréis", "dirán"]
+    },
+    {
+      "infinitive": "ver",
+      "english": "to see",
+      "present": ["veo", "ves", "ve", "vemos", "veis", "ven"],
+      "preterite": ["vi", "viste", "vio", "vimos", "visteis", "vieron"],
+      "future": ["veré", "verás", "verá", "veremos", "veréis", "verán"]
+    },
+    {
+      "infinitive": "dar",
+      "english": "to give",
+      "present": ["doy", "das", "da", "damos", "dais", "dan"],
+      "preterite": ["di", "diste", "dio", "dimos", "disteis", "dieron"],
+      "future": ["daré", "darás", "dará", "daremos", "daréis", "darán"]
+    },
+    {
+      "infinitive": "saber",
+      "english": "to know (facts)",
+      "present": ["sé", "sabes", "sabe", "sabemos", "sabéis", "saben"],
+      "preterite": ["supe", "supiste", "supo", "supimos", "supisteis", "supieron"],
+      "future": ["sabré", "sabrás", "sabrá", "sabremos", "sabréis", "sabrán"]
+    },
+    {
+      "infinitive": "querer",
+      "english": "to want, to love",
+      "present": ["quiero", "quieres", "quiere", "queremos", "queréis", "quieren"],
+      "preterite": ["quise", "quisiste", "quiso", "quisimos", "quisisteis", "quisieron"],
+      "future": ["querré", "querrás", "querrá", "querremos", "querréis", "querrán"]
+    },
+    {
+      "infinitive": "venir",
+      "english": "to come",
+      "present": ["vengo", "vienes", "viene", "venimos", "venís", "vienen"],
+      "preterite": ["vine", "viniste", "vino", "vinimos", "vinisteis", "vinieron"],
+      "future": ["vendré", "vendrás", "vendrá", "vendremos", "vendréis", "vendrán"]
+    },
+    {
+      "infinitive": "salir",
+      "english": "to go out, to leave",
+      "present": ["salgo", "sales", "sale", "salimos", "salís", "salen"],
+      "preterite": ["salí", "saliste", "salió", "salimos", "salisteis", "salieron"],
+      "future": ["saldré", "saldrás", "saldrá", "saldremos", "saldréis", "saldrán"]
+    },
+    {
+      "infinitive": "poner",
+      "english": "to put, to place",
+      "present": ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"],
+      "preterite": ["puse", "pusiste", "puso", "pusimos", "pusisteis", "pusieron"],
+      "future": ["pondré", "pondrás", "pondrá", "pondremos", "pondréis", "pondrán"]
+    },
+    {
+      "infinitive": "conocer",
+      "english": "to know (people)",
+      "present": ["conozco", "conoces", "conoce", "conocemos", "conocéis", "conocen"],
+      "preterite": ["conocí", "conociste", "conoció", "conocimos", "conocisteis", "conocieron"],
+      "future": ["conoceré", "conocerás", "conocerá", "conoceremos", "conoceréis", "conocerán"]
+    }
+  ]
+}
