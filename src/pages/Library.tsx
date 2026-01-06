@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import type { Card, Page } from '../types';
+import type { Card, Page, ReviewLog } from '../types';
 import { getAllCards, deleteCard, updateCard, importCards } from '../db/cards';
+import { getAllReviews } from '../db/reviews';
 import { EditCard } from '../components/EditCard';
 import { TagInput } from '../components/TagInput';
 import { TagManager } from '../components/TagManager';
@@ -9,6 +10,7 @@ import { MasteryBadge, MasteryFilter } from '../components/MasteryBadge';
 import { DifficultyIndicator } from '../components/CardDifficultyViz';
 import { StarterDecks } from '../components/StarterDecks';
 import { ForgettingCurve } from '../components/ForgettingCurve';
+import { TagCompare } from '../components/TagCompare';
 import { getMasteryLevel, getMasteryBreakdown, type MasteryLevel } from '../utils/mastery';
 import { handleError } from '../utils/errors';
 
@@ -38,6 +40,8 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
   const [showStarterDecks, setShowStarterDecks] = useState(false);
   const [showTagManager, setShowTagManager] = useState(false);
   const [selectedCardForCurve, setSelectedCardForCurve] = useState<string | null>(null);
+  const [compareMode, setCompareMode] = useState(false);
+  const [allReviews, setAllReviews] = useState<ReviewLog[]>([]);
   const deletedCardsRef = useRef<Card[]>([]);
 
   useEffect(() => {
@@ -54,10 +58,14 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
 
   const loadCards = async () => {
     try {
-      const allCards = await getAllCards();
+      const [allCards, reviews] = await Promise.all([
+        getAllCards(),
+        getAllReviews(),
+      ]);
       // Sort by creation date (newest first)
       allCards.sort((a, b) => b.createdAt - a.createdAt);
       setCards(allCards);
+      setAllReviews(reviews);
 
       // Extract all unique tags
       const tags = new Set<string>();
@@ -307,7 +315,19 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold">Library</h2>
         <div className="flex gap-2">
-          {cards.length > 0 && (
+          {allTags.length >= 2 && !selectMode && (
+            <button
+              onClick={() => setCompareMode(!compareMode)}
+              className={`text-sm px-3 py-1 rounded ${
+                compareMode
+                  ? isDark ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white'
+                  : isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {compareMode ? 'Back to Cards' : 'Compare Tags'}
+            </button>
+          )}
+          {cards.length > 0 && !compareMode && (
             <button
               onClick={() => selectMode ? exitSelectMode() : setSelectMode(true)}
               className={`text-sm px-3 py-1 rounded ${
@@ -507,21 +527,36 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
         )}
       </div>
 
-      {/* Starter Decks button */}
-      <button
-        onClick={() => setShowStarterDecks(true)}
-        className={`w-full mb-4 p-3 rounded-lg border-2 border-dashed flex items-center justify-center gap-2 transition-colors ${
-          isDark
-            ? 'border-gray-600 text-gray-400 hover:border-emerald-600 hover:text-emerald-400'
-            : 'border-gray-300 text-gray-500 hover:border-emerald-500 hover:text-emerald-600'
-        }`}
-      >
-        <span className="text-xl">📚</span>
-        <span className="font-medium">Browse Starter Decks</span>
-      </button>
+      {/* Compare Tags Mode */}
+      {compareMode && (
+        <TagCompare
+          allCards={cards}
+          allReviews={allReviews}
+          isDark={isDark}
+          onCardClick={(card) => {
+            setCompareMode(false);
+            setEditingCard(card);
+          }}
+        />
+      )}
 
-      {/* Empty state */}
-      {cards.length === 0 ? (
+      {/* Starter Decks button - hide in compare mode */}
+      {!compareMode && (
+        <button
+          onClick={() => setShowStarterDecks(true)}
+          className={`w-full mb-4 p-3 rounded-lg border-2 border-dashed flex items-center justify-center gap-2 transition-colors ${
+            isDark
+              ? 'border-gray-600 text-gray-400 hover:border-emerald-600 hover:text-emerald-400'
+              : 'border-gray-300 text-gray-500 hover:border-emerald-500 hover:text-emerald-600'
+          }`}
+        >
+          <span className="text-xl">📚</span>
+          <span className="font-medium">Browse Starter Decks</span>
+        </button>
+      )}
+
+      {/* Empty state and card list - hide in compare mode */}
+      {!compareMode && cards.length === 0 ? (
         <div className="text-center py-8">
           <p className={`mb-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>No cards yet</p>
           <div className="flex flex-col items-center gap-2">
@@ -540,11 +575,11 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
             </button>
           </div>
         </div>
-      ) : filteredCards.length === 0 ? (
+      ) : !compareMode && filteredCards.length === 0 ? (
         <div className="text-center py-8">
           <p className={isDark ? 'text-gray-400' : 'text-gray-500'}>No cards match your search</p>
         </div>
-      ) : (
+      ) : !compareMode ? (
         <div className="space-y-2">
           {filteredCards.map(card => (
             <div
@@ -644,7 +679,7 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
             </div>
           ))}
         </div>
-      )}
+      ) : null}
 
       {/* Stats */}
       {cards.length > 0 && (

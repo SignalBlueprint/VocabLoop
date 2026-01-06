@@ -118,29 +118,29 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Create tag analytics utility — `src/utils/tagAnalytics.ts`
-  - [ ] Implement `getTagStats(cards: Card[], reviews: ReviewLog[], tag: string): TagStats` returning {tag, cardCount, avgEase, avgInterval, successRate, avgTimeToMastery, mostForgotten: Card[]}
-  - [ ] Calculate successRate from reviews of cards with this tag
-  - [ ] Calculate avgTimeToMastery as average days from creation to first interval >= 21 days
-  - [ ] Find mostForgotten as top 3 cards by lapses count
-  - [ ] Add unit tests in `src/utils/tagAnalytics.test.ts`
+- [x] Create tag analytics utility — `src/utils/tagAnalytics.ts`
+  - [x] Implement `getTagStats(cards: Card[], reviews: ReviewLog[], tag: string): TagStats` returning {tag, cardCount, avgEase, avgInterval, successRate, avgTimeToMastery, mostForgotten: Card[]}
+  - [x] Calculate successRate from reviews of cards with this tag
+  - [x] Calculate avgTimeToMastery as average days from creation to first interval >= 21 days
+  - [x] Find mostForgotten as top 3 cards by lapses count
+  - [x] Add unit tests in `src/utils/tagAnalytics.test.ts`
 
-- [ ] Create TagCompare component — `src/components/TagCompare.tsx`
-  - [ ] Accept props: `allCards: Card[]`, `allReviews: ReviewLog[]`, `allTags: string[]`
-  - [ ] Two dropdown selectors to pick tags to compare
-  - [ ] Side-by-side display of TagStats for each selected tag
-  - [ ] Visual indicators (green arrow up, red arrow down) showing which tag performs better on each metric
-  - [ ] List "Most Forgotten Cards" for each tag with links to those cards
+- [x] Create TagCompare component — `src/components/TagCompare.tsx`
+  - [x] Accept props: `allCards: Card[]`, `allReviews: ReviewLog[]`, `allTags: string[]`
+  - [x] Two dropdown selectors to pick tags to compare
+  - [x] Side-by-side display of TagStats for each selected tag
+  - [x] Visual indicators (green arrow up, red arrow down) showing which tag performs better on each metric
+  - [x] List "Most Forgotten Cards" for each tag with links to those cards
 
-- [ ] Add "Compare Tags" mode to Library page — `src/pages/Library.tsx`
-  - [ ] Add toggle button "Compare Tags" near search/filter controls
-  - [ ] When enabled, hide card list and show TagCompare component
-  - [ ] Pass cards, reviews, and unique tags to component
-  - [ ] Toggle button text changes to "Back to Cards" when in compare mode
+- [x] Add "Compare Tags" mode to Library page — `src/pages/Library.tsx`
+  - [x] Add toggle button "Compare Tags" near search/filter controls
+  - [x] When enabled, hide card list and show TagCompare component
+  - [x] Pass cards, reviews, and unique tags to component
+  - [x] Toggle button text changes to "Back to Cards" when in compare mode
 
-- [ ] Extract unique tags utility — `src/utils/tags.ts`
-  - [ ] Implement `extractAllTags(cards: Card[]): string[]` returning sorted unique tags
-  - [ ] Reuse this in Library.tsx tag filter and TagCompare
+- [x] Extract unique tags utility — `src/utils/tags.ts`
+  - [x] Implement `extractAllTags(cards: Card[]): string[]` returning sorted unique tags
+  - [x] Reuse this in Library.tsx tag filter and TagCompare
 
 **Acceptance Criteria:**
 - "Compare Tags" button visible in Library page

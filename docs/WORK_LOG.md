@@ -52,3 +52,29 @@
 - Insight message generates correctly
 
 ---
+
+## 1.3 Tag Performance Showdown
+**Completed:** 2026-01-06T15:28:00Z
+**Files Changed:**
+- src/utils/tagAnalytics.ts — Created tag analytics utilities (getTagStats, getCardsWithTag, compareTagMetric, extractAllTags, formatting helpers)
+- src/utils/tagAnalytics.test.ts — Added 29 unit tests for all analytics functions
+- src/components/TagCompare.tsx — Side-by-side tag comparison component with dropdowns, metrics table, and most forgotten cards
+- src/pages/Library.tsx — Added "Compare Tags" button, compareMode state, TagCompare integration
+
+**Implementation Notes:**
+- Metrics compared: card count, success rate, avg ease, avg interval, mastered count, time to mastery
+- Visual indicators (↑ green = better, ↓ red = needs work) show which tag performs better
+- "Most Forgotten" cards listed for each tag with click-to-edit functionality
+- extractAllTags utility function placed in tagAnalytics.ts for reuse
+- Compare Tags mode hides card list and shows comparison component
+- Requires at least 2 tags to enable Compare Tags button
+
+**Verification:**
+- All 29 unit tests pass (269 total tests)
+- Build compiles successfully
+- Compare Tags button appears when 2+ tags exist
+- Side-by-side comparison table displays correctly
+- Clicking forgotten card exits compare mode and opens edit modal
+- Dark mode colors render properly
+
+---
