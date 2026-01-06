@@ -8,6 +8,7 @@ import { LibrarySkeleton } from '../components/Skeleton';
 import { MasteryBadge, MasteryFilter } from '../components/MasteryBadge';
 import { DifficultyIndicator } from '../components/CardDifficultyViz';
 import { StarterDecks } from '../components/StarterDecks';
+import { ForgettingCurve } from '../components/ForgettingCurve';
 import { getMasteryLevel, getMasteryBreakdown, type MasteryLevel } from '../utils/mastery';
 import { handleError } from '../utils/errors';
 
@@ -36,6 +37,7 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
   });
   const [showStarterDecks, setShowStarterDecks] = useState(false);
   const [showTagManager, setShowTagManager] = useState(false);
+  const [selectedCardForCurve, setSelectedCardForCurve] = useState<string | null>(null);
   const deletedCardsRef = useRef<Card[]>([]);
 
   useEffect(() => {
@@ -608,6 +610,13 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
                     ) : (
                       <>
                         <button
+                          onClick={() => setSelectedCardForCurve(card.id)}
+                          className={isDark ? 'text-gray-500 hover:text-blue-400' : 'text-gray-400 hover:text-blue-500'}
+                          title="View retention curve"
+                        >
+                          📈
+                        </button>
+                        <button
                           onClick={() => setEditingCard(card)}
                           className={isDark ? 'text-gray-500 hover:text-emerald-500' : 'text-gray-400 hover:text-emerald-600'}
                         >
@@ -672,6 +681,15 @@ export function Library({ onNavigate, showToast, isDark }: LibraryProps) {
           onClose={() => setShowTagManager(false)}
           showToast={showToast}
           onTagsChanged={loadCards}
+        />
+      )}
+
+      {/* Forgetting Curve modal */}
+      {selectedCardForCurve && (
+        <ForgettingCurve
+          cardId={selectedCardForCurve}
+          onClose={() => setSelectedCardForCurve(null)}
+          isDark={isDark}
         />
       )}
     </div>

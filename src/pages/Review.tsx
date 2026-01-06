@@ -21,6 +21,7 @@ import { getTotalXP } from '../utils/xp';
 import { playCorrectSound, playWrongSound, playFlipSound, playHintSound, resumeAudioContext } from '../utils/sounds';
 import { incrementAchievementProgress } from '../utils/achievements';
 import { saveUndoState, getUndoState, clearUndoState, getUndoTimeRemaining } from '../utils/undoReview';
+import { ForgettingCurve } from '../components/ForgettingCurve';
 
 // Helper to render cloze with blank or revealed word
 function renderClozeQuestion(sentence: string, word: string, revealed: boolean, isDark: boolean): React.ReactNode {
@@ -83,6 +84,7 @@ export function Review({ onNavigate, showToast, isDark, immersionMode = false }:
   const [canUndoReview, setCanUndoReview] = useState(false);
   const [undoTimeLeft, setUndoTimeLeft] = useState(0);
   const [xpGainAmount, setXpGainAmount] = useState(0); // For XP animation
+  const [showCurve, setShowCurve] = useState(false); // For forgetting curve modal
 
   // Session tracking refs
   const sessionStartTime = useRef<number>(0);
@@ -398,6 +400,9 @@ export function Review({ onNavigate, showToast, isDark, immersionMode = false }:
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't handle shortcuts when modal is open
+      if (showCurve) return;
+
       if (state === 'show-front' && e.code === 'Space') {
         e.preventDefault();
         showAnswer();
@@ -417,7 +422,7 @@ export function Review({ onNavigate, showToast, isDark, immersionMode = false }:
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [state, showAnswer, handleGrade, currentCard]);
+  }, [state, showAnswer, handleGrade, currentCard, showCurve]);
 
   // Direction selection state
   if (state === 'select-direction') {
@@ -663,28 +668,38 @@ export function Review({ onNavigate, showToast, isDark, immersionMode = false }:
               </p>
             )}
 
-            {/* Speak button - always speaks Spanish */}
-            {speechEnabled && hasSpanish && (
-              <div className="mt-4 flex items-center justify-center gap-4">
-                <button
-                  onClick={() => speak(currentCard.type === 'CLOZE' ? (currentCard.clozeSentence || currentCard.front) : currentCard.front, slowMode)}
-                  className="text-2xl hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded"
-                  aria-label="Speak Spanish text aloud"
-                >
-                  🔊
-                </button>
-                <label className={`flex items-center gap-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                  <input
-                    type="checkbox"
-                    checked={slowMode}
-                    onChange={(e) => setSlowMode(e.target.checked)}
-                    className="rounded focus:ring-emerald-500"
-                    aria-label="Enable slow speech mode"
-                  />
-                  Slow
-                </label>
-              </div>
-            )}
+            {/* Speak button and chart button */}
+            <div className="mt-4 flex items-center justify-center gap-4">
+              {speechEnabled && hasSpanish && (
+                <>
+                  <button
+                    onClick={() => speak(currentCard.type === 'CLOZE' ? (currentCard.clozeSentence || currentCard.front) : currentCard.front, slowMode)}
+                    className="text-2xl hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded"
+                    aria-label="Speak Spanish text aloud"
+                  >
+                    🔊
+                  </button>
+                  <label className={`flex items-center gap-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <input
+                      type="checkbox"
+                      checked={slowMode}
+                      onChange={(e) => setSlowMode(e.target.checked)}
+                      className="rounded focus:ring-emerald-500"
+                      aria-label="Enable slow speech mode"
+                    />
+                    Slow
+                  </label>
+                </>
+              )}
+              <button
+                onClick={() => setShowCurve(true)}
+                className="text-2xl hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                aria-label="View retention curve"
+                title="View retention curve"
+              >
+                📈
+              </button>
+            </div>
             {speechEnabled && !hasSpanish && (
               <p className={`mt-4 text-xs text-center ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
                 Spanish voices not available on this browser
@@ -794,6 +809,15 @@ export function Review({ onNavigate, showToast, isDark, immersionMode = false }:
           message="You've reached your daily review goal. Keep up the great work!"
           icon="🎯"
           onClose={() => setShowGoalCelebration(false)}
+          isDark={isDark}
+        />
+      )}
+
+      {/* Forgetting Curve modal */}
+      {showCurve && currentCard && (
+        <ForgettingCurve
+          cardId={currentCard.id}
+          onClose={() => setShowCurve(false)}
           isDark={isDark}
         />
       )}

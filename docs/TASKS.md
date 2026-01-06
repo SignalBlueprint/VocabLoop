@@ -21,34 +21,34 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Create retention calculation utility — `src/utils/retention.ts`
-  - [ ] Implement `calculateRetention(intervalDays: number, daysSinceReview: number): number` using SM-2 retention formula (R = e^(-t/S) where S is stability derived from interval)
-  - [ ] Implement `generateRetentionCurve(reviews: ReviewLog[], createdAt: number): DataPoint[]` that returns array of {day, retention, isReview} for charting
-  - [ ] Add unit tests in `src/utils/retention.test.ts` with edge cases (no reviews, single review, many reviews)
+- [x] Create retention calculation utility — `src/utils/retention.ts`
+  - [x] Implement `calculateRetention(intervalDays: number, daysSinceReview: number): number` using SM-2 retention formula (R = e^(-t/S) where S is stability derived from interval)
+  - [x] Implement `generateRetentionCurve(reviews: ReviewLog[], createdAt: number): DataPoint[]` that returns array of {day, retention, isReview} for charting
+  - [x] Add unit tests in `src/utils/retention.test.ts` with edge cases (no reviews, single review, many reviews)
 
-- [ ] Create ForgettingCurve chart component — `src/components/ForgettingCurve.tsx`
-  - [ ] Accept props: `cardId: string`, `onClose: () => void`
-  - [ ] Fetch card data via `getCard(cardId)` and review history via `getReviewsForCard(cardId)`
-  - [ ] Render SVG line chart with X-axis (days since creation) and Y-axis (retention %)
-  - [ ] Plot retention decay curve as a line
-  - [ ] Mark review events as dots on the curve with grade color coding (red=again, orange=hard, green=good, blue=easy)
-  - [ ] Add dashed projection line showing predicted future retention
-  - [ ] Show current retention percentage as large number
-  - [ ] Include close button (X) in top-right corner
+- [x] Create ForgettingCurve chart component — `src/components/ForgettingCurve.tsx`
+  - [x] Accept props: `cardId: string`, `onClose: () => void`
+  - [x] Fetch card data via `getCard(cardId)` and review history via `getReviewsForCard(cardId)`
+  - [x] Render SVG line chart with X-axis (days since creation) and Y-axis (retention %)
+  - [x] Plot retention decay curve as a line
+  - [x] Mark review events as dots on the curve with grade color coding (red=again, orange=hard, green=good, blue=easy)
+  - [x] Add dashed projection line showing predicted future retention
+  - [x] Show current retention percentage as large number
+  - [x] Include close button (X) in top-right corner
 
-- [ ] Add "📈" button to Library card list — `src/pages/Library.tsx`
-  - [ ] Add chart icon button next to each card's edit/delete buttons
-  - [ ] On click, open ForgettingCurve modal for that card
-  - [ ] Manage modal open/close state with `selectedCardForCurve` state variable
+- [x] Add "📈" button to Library card list — `src/pages/Library.tsx`
+  - [x] Add chart icon button next to each card's edit/delete buttons
+  - [x] On click, open ForgettingCurve modal for that card
+  - [x] Manage modal open/close state with `selectedCardForCurve` state variable
 
-- [ ] Add "📈" button to card detail in Review — `src/pages/Review.tsx`
-  - [ ] After card reveal, show small chart icon button
-  - [ ] Opens same ForgettingCurve modal component
-  - [ ] Ensure modal doesn't interfere with keyboard shortcuts
+- [x] Add "📈" button to card detail in Review — `src/pages/Review.tsx`
+  - [x] After card reveal, show small chart icon button
+  - [x] Opens same ForgettingCurve modal component
+  - [x] Ensure modal doesn't interfere with keyboard shortcuts
 
-- [ ] Style ForgettingCurve for dark mode compatibility — `src/components/ForgettingCurve.tsx`
-  - [ ] Use CSS variables for colors that respect dark mode
-  - [ ] Test chart visibility in both light and dark themes
+- [x] Style ForgettingCurve for dark mode compatibility — `src/components/ForgettingCurve.tsx`
+  - [x] Use CSS variables for colors that respect dark mode
+  - [x] Test chart visibility in both light and dark themes
 
 **Acceptance Criteria:**
 - Chart button visible on every card in Library and during Review
