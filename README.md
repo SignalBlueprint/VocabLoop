@@ -1,9 +1,22 @@
+<!-- SB:APP
+name: VocabLoop
+slug: vocabloop
+type: web
+health: green
+owner: Grif
+last_verified: 2026-01-06
+-->
+
 # VocabLoop
 
 [![Tests](https://img.shields.io/badge/tests-200%20passing-brightgreen)](https://github.com/SignalBlueprint/VocabLoop)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<!-- SB:SECTION:STATUS -->
+**Status:** Fully functional PWA with 200 passing tests. Main risk: Browser data loss without backup (no cloud sync).
+<!-- SB:SECTION:STATUS:END -->
 
 **Master Spanish vocabulary with science-backed spaced repetition, engaging mini-games, and comprehensive progress tracking.**
 
@@ -126,6 +139,56 @@ npm run build
 # Run tests (200 tests)
 npm test
 ```
+
+<!-- SB:SECTION:HOW_TO_RUN -->
+## How to Run
+
+| Command | Description |
+|---------|-------------|
+| `npm install` | Install dependencies |
+| `npm run dev` | Start dev server (Vite) |
+| `npm run build` | TypeScript compile + production build |
+| `npm run preview` | Preview production build locally |
+| `npm test` | Run tests once (Vitest) |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run tests with coverage |
+| `npm run lint` | Lint with ESLint |
+<!-- SB:SECTION:HOW_TO_RUN:END -->
+
+<!-- SB:SECTION:ENV -->
+## Environment Variables
+
+No environment variables required. App runs entirely client-side with IndexedDB storage.
+<!-- SB:SECTION:ENV:END -->
+
+<!-- SB:SECTION:ENTRY_POINTS -->
+## Entry Points
+
+| Entry | Path | Description |
+|-------|------|-------------|
+| Main | `src/main.tsx` | React app bootstrap |
+| App | `src/App.tsx` | Root component with routing |
+| Index HTML | `index.html` | HTML entry with PWA manifest |
+| Service Worker | `public/sw.js` | Offline caching |
+
+### Routes (in-app)
+
+| Route | Page | Description |
+|-------|------|-------------|
+| Home | `src/pages/Home.tsx` | Dashboard with XP, streaks, challenges |
+| Review | `src/pages/Review.tsx` | Core SRS review engine |
+| Library | `src/pages/Library.tsx` | Card management |
+| Stats | `src/pages/Stats.tsx` | Analytics and export/import |
+| Quiz | `src/pages/Quiz.tsx` | Multiple choice game |
+| VerbMode | `src/pages/VerbMode.tsx` | Verb conjugation practice |
+| MatchingGame | `src/pages/MatchingGame.tsx` | Memory matching game |
+| TypingChallenge | `src/pages/TypingChallenge.tsx` | Type-the-answer game |
+| SpeedRound | `src/pages/SpeedRound.tsx` | Fast-paced drills |
+| ListeningMode | `src/pages/ListeningMode.tsx` | Audio comprehension |
+| CustomStudy | `src/pages/CustomStudy.tsx` | Build focused sessions |
+| ClozeCreator | `src/pages/ClozeCreator.tsx` | Fill-in-blank generator |
+| FrequencyList | `src/pages/FrequencyList.tsx` | Top 500 word browser |
+<!-- SB:SECTION:ENTRY_POINTS:END -->
 
 ---
 
@@ -288,6 +351,16 @@ The following enhancements would improve user experience and bring key features 
 | **Tag Performance Dashboard** | Compare success rates across vocabulary categories |
 | **Optimal Review Time** | Suggest best time of day based on past performance patterns |
 | **Export to Anki** | Allow deck export in Anki-compatible format for users switching tools |
+
+---
+
+<!-- SB:SECTION:NEXT_UPGRADES -->
+## Next Upgrades
+
+1. **Add cloud sync option** - Prevent data loss risk by offering optional account-based backup
+2. **Export to Anki format** - Allow users to export decks in Anki-compatible format for portability
+3. **Add high contrast mode** - Improve accessibility for users with visual impairments
+<!-- SB:SECTION:NEXT_UPGRADES:END -->
 
 ---
 
