@@ -15,7 +15,12 @@
       "Bash(git commit:*)",
       "Bash(git remote add:*)",
       "Bash(git branch:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(timeout 5 npm run dev:*)",
+      "Bash(if [ -f C:/Users/gbone/flashstack/docs/WORK_LOG.md ])",
+      "Bash(then mv C:/Users/gbone/flashstack/docs/WORK_LOG.md C:/Users/gbone/flashstack/docs/archive/WORK_LOG-2026-01-06.md)",
+      "Bash(else echo \"No WORK_LOG.md to archive\")",
+      "Bash(fi)"
     ]
   }
 }
