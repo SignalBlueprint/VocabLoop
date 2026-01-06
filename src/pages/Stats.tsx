@@ -16,6 +16,8 @@ import { getTodayStudyTime, getWeeklyStudyTime, getAllTimeStudyTime, formatStudy
 import { WeakAreasReport } from '../components/WeakAreasReport';
 import { TimeAnalytics } from '../components/TimeAnalytics';
 import { DifficultyDistribution } from '../components/CardDifficultyViz';
+import { WeakestHourInsight } from '../components/WeakestHourInsight';
+import type { ReviewLog } from '../types';
 
 interface StatsProps {
   onNavigate: (page: Page) => void;
@@ -32,6 +34,7 @@ export function Stats({ onNavigate, showToast, isDark }: StatsProps) {
   const [learned, setLearned] = useState<number>(0);
   const [weeklyData, setWeeklyData] = useState<{ day: string; count: number }[]>([]);
   const [allCards, setAllCards] = useState<Awaited<ReturnType<typeof getAllCards>>>([]);
+  const [allReviews, setAllReviews] = useState<ReviewLog[]>([]);
   const [studyTimeToday, setStudyTimeToday] = useState(0);
   const [studyTimeWeekly, setStudyTimeWeekly] = useState(0);
   const [studyTimeTotal, setStudyTimeTotal] = useState(0);
@@ -62,6 +65,7 @@ export function Stats({ onNavigate, showToast, isDark }: StatsProps) {
       setDueCount(due);
       setTotalCards(all.length);
       setAllCards(all);
+      setAllReviews(allReviews);
       setReviewedToday(today);
       setStreak(streakDays);
       setLearned(learnedCount);
@@ -311,6 +315,11 @@ export function Stats({ onNavigate, showToast, isDark }: StatsProps) {
       {/* Time analytics */}
       <div className="mb-6">
         <TimeAnalytics isDark={isDark} />
+      </div>
+
+      {/* Your Learning Rhythm (hourly heatmap) */}
+      <div className="mb-6">
+        <WeakestHourInsight reviews={allReviews} isDark={isDark} />
       </div>
 
       {/* Card difficulty distribution */}

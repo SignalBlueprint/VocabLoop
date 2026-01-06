@@ -70,33 +70,33 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Create time-based analytics utility — `src/utils/hourlyAnalytics.ts`
-  - [ ] Implement `analyzeReviewsByHour(reviews: ReviewLog[]): HourlyStats[]` returning array of 24 objects with {hour, totalReviews, successCount, successRate}
-  - [ ] Define success as grade !== 'again'
-  - [ ] Implement `findOptimalHours(hourlyStats: HourlyStats[]): { best: number[], worst: number[] }` returning top 3 best and worst hours
-  - [ ] Implement `generateInsightMessage(hourlyStats: HourlyStats[]): string` returning actionable text like "You perform 23% better in mornings (8-10am) than late night (10pm-12am)"
-  - [ ] Add unit tests in `src/utils/hourlyAnalytics.test.ts`
+- [x] Create time-based analytics utility — `src/utils/hourlyAnalytics.ts`
+  - [x] Implement `analyzeReviewsByHour(reviews: ReviewLog[]): HourlyStats[]` returning array of 24 objects with {hour, totalReviews, successCount, successRate}
+  - [x] Define success as grade !== 'again'
+  - [x] Implement `findOptimalHours(hourlyStats: HourlyStats[]): { best: number[], worst: number[] }` returning top 3 best and worst hours
+  - [x] Implement `generateInsightMessage(hourlyStats: HourlyStats[]): string` returning actionable text like "You perform 23% better in mornings (8-10am) than late night (10pm-12am)"
+  - [x] Add unit tests in `src/utils/hourlyAnalytics.test.ts`
 
-- [ ] Create HourlyHeatmap component — `src/components/HourlyHeatmap.tsx`
-  - [ ] Accept props: `hourlyStats: HourlyStats[]`
-  - [ ] Render 24-cell horizontal bar chart (one cell per hour)
-  - [ ] Color cells from red (low success) to green (high success) based on success rate
-  - [ ] Show hour labels below (12am, 6am, 12pm, 6pm, 12am)
-  - [ ] On hover/tap, show tooltip with exact stats: "8am: 45 reviews, 89% success"
-  - [ ] Gray out hours with <5 reviews (insufficient data)
+- [x] Create HourlyHeatmap component — `src/components/HourlyHeatmap.tsx`
+  - [x] Accept props: `hourlyStats: HourlyStats[]`
+  - [x] Render 24-cell horizontal bar chart (one cell per hour)
+  - [x] Color cells from red (low success) to green (high success) based on success rate
+  - [x] Show hour labels below (12am, 6am, 12pm, 6pm, 12am)
+  - [x] On hover/tap, show tooltip with exact stats: "8am: 45 reviews, 89% success"
+  - [x] Gray out hours with <5 reviews (insufficient data)
 
-- [ ] Create WeakestHourInsight component — `src/components/WeakestHourInsight.tsx`
-  - [ ] Accept props: `reviews: ReviewLog[]`
-  - [ ] Compute hourly stats using utility function
-  - [ ] Render HourlyHeatmap
-  - [ ] Display insight message below heatmap
-  - [ ] Show "Not enough data yet" if total reviews < 50
+- [x] Create WeakestHourInsight component — `src/components/WeakestHourInsight.tsx`
+  - [x] Accept props: `reviews: ReviewLog[]`
+  - [x] Compute hourly stats using utility function
+  - [x] Render HourlyHeatmap
+  - [x] Display insight message below heatmap
+  - [x] Show "Not enough data yet" if total reviews < 50
 
-- [ ] Integrate into Stats page — `src/pages/Stats.tsx`
-  - [ ] Add new section titled "Your Learning Rhythm"
-  - [ ] Fetch all reviews via `getAllReviews()`
-  - [ ] Render WeakestHourInsight component
-  - [ ] Position below existing streak/XP stats
+- [x] Integrate into Stats page — `src/pages/Stats.tsx`
+  - [x] Add new section titled "Your Learning Rhythm"
+  - [x] Fetch all reviews via `getAllReviews()`
+  - [x] Render WeakestHourInsight component
+  - [x] Position below existing streak/XP stats
 
 **Acceptance Criteria:**
 - Stats page shows 24-hour heatmap of success rates

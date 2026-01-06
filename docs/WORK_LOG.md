@@ -26,3 +26,29 @@
 - Dark mode colors render properly
 
 ---
+
+## 1.2 "Weakest Hour" Insights
+**Completed:** 2026-01-06T15:22:00Z
+**Files Changed:**
+- src/utils/hourlyAnalytics.ts — Created hourly analytics utilities (analyzeReviewsByHour, findOptimalHours, generateInsightMessage, getHeatmapColor)
+- src/utils/hourlyAnalytics.test.ts — Added 21 unit tests for all analytics functions
+- src/components/HourlyHeatmap.tsx — 24-cell heatmap with tooltip on hover/tap
+- src/components/WeakestHourInsight.tsx — Wrapper component showing heatmap + insight message
+- src/pages/Stats.tsx — Integrated WeakestHourInsight after Time Analytics section
+
+**Implementation Notes:**
+- Success is defined as grade !== 'again' (hard, good, easy all count as success)
+- Hours with <5 reviews are grayed out and marked as insufficient data
+- Color scale: red (bad) → orange → yellow → green (good)
+- Insight message compares best and worst time periods with actionable advice
+- Shows "Not enough data yet" message if total reviews < 50
+- Full dark mode support
+
+**Verification:**
+- All 21 unit tests pass (240 total tests)
+- Build compiles successfully
+- Heatmap displays on Stats page
+- Tooltip shows on hover/tap
+- Insight message generates correctly
+
+---
