@@ -87,7 +87,7 @@ describe('mergeCards', () => {
       }),
     ];
 
-    const { merged, conflicts } = mergeCards(localCards, remoteCards);
+    const { merged } = mergeCards(localCards, remoteCards);
 
     expect(merged).toHaveLength(1);
     expect(merged[0].front).toBe('local version');

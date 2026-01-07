@@ -21,6 +21,17 @@ interface GameInfo {
 
 const GAMES: GameInfo[] = [
   {
+    id: 'multiplayer-lobby',
+    name: 'Multiplayer',
+    description: 'Race a friend!',
+    icon: '🏃',
+    color: {
+      light: 'from-green-500 to-emerald-500',
+      dark: 'from-green-600 to-emerald-600',
+    },
+    featured: true,
+  },
+  {
     id: 'speedround',
     name: 'Speed Round',
     description: '5 seconds per card!',
@@ -51,7 +62,6 @@ const GAMES: GameInfo[] = [
       light: 'from-cyan-500 to-blue-500',
       dark: 'from-cyan-600 to-blue-600',
     },
-    featured: true,
   },
   {
     id: 'typing',

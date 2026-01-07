@@ -268,67 +268,67 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Design multiplayer protocol — `docs/MULTIPLAYER_PROTOCOL.md`
-  - [ ] Document message types: JOIN_ROOM, ROOM_JOINED, GAME_START, CARD_SHOWN, ANSWER_SUBMITTED, ROUND_RESULT, GAME_END
-  - [ ] Define room state machine: WAITING → COUNTDOWN → PLAYING → FINISHED
-  - [ ] Specify timing: 60-second matches, 5-second card timer
-  - [ ] Document anti-cheat considerations (server validates answers)
+- [x] Design multiplayer protocol — `docs/MULTIPLAYER_PROTOCOL.md`
+  - [x] Document message types: JOIN_ROOM, ROOM_JOINED, GAME_START, CARD_SHOWN, ANSWER_SUBMITTED, ROUND_RESULT, GAME_END
+  - [x] Define room state machine: WAITING → COUNTDOWN → PLAYING → FINISHED
+  - [x] Specify timing: 60-second matches, 5-second card timer
+  - [x] Document anti-cheat considerations (server validates answers)
 
-- [ ] Set up WebSocket server — `server/index.ts`
-  - [ ] Initialize new Node.js project in `server/` directory
-  - [ ] Install dependencies: `npm init -y && npm install ws uuid`
-  - [ ] Create WebSocket server listening on port 3001
-  - [ ] Implement room management: createRoom, joinRoom, leaveRoom
-  - [ ] Store active rooms in memory Map
-  - [ ] Add room code generation (6 alphanumeric characters)
+- [x] Set up WebSocket server — `server/index.ts`
+  - [x] Initialize new Node.js project in `server/` directory
+  - [x] Install dependencies: `npm init -y && npm install ws uuid`
+  - [x] Create WebSocket server listening on port 3001
+  - [x] Implement room management: createRoom, joinRoom, leaveRoom
+  - [x] Store active rooms in memory Map
+  - [x] Add room code generation (6 alphanumeric characters)
 
-- [ ] Implement game logic on server — `server/game.ts`
-  - [ ] Load card pool from shared JSON file
-  - [ ] Implement round management: select card, broadcast to players, collect answers
-  - [ ] Score answers: first correct answer = 2 points, second correct = 1 point, wrong = 0
-  - [ ] Track scores per player throughout match
-  - [ ] Broadcast final results when time expires
+- [x] Implement game logic on server — `server/game.ts`
+  - [x] Load card pool from shared JSON file
+  - [x] Implement round management: select card, broadcast to players, collect answers
+  - [x] Score answers: first correct answer = 2 points, second correct = 1 point, wrong = 0
+  - [x] Track scores per player throughout match
+  - [x] Broadcast final results when time expires
 
-- [ ] Create WebSocket client hook — `src/hooks/useMultiplayer.ts`
-  - [ ] Implement `connect(roomCode: string, playerName: string): void`
-  - [ ] Implement `disconnect(): void`
-  - [ ] Implement `submitAnswer(answer: string): void`
-  - [ ] Expose state: connectionStatus, roomState, players, currentCard, scores, timeRemaining
-  - [ ] Handle reconnection on disconnect
+- [x] Create WebSocket client hook — `src/hooks/useMultiplayer.ts`
+  - [x] Implement `connect(roomCode: string, playerName: string): void`
+  - [x] Implement `disconnect(): void`
+  - [x] Implement `submitAnswer(answer: string): void`
+  - [x] Expose state: connectionStatus, roomState, players, currentCard, scores, timeRemaining
+  - [x] Handle reconnection on disconnect
 
-- [ ] Create room lobby UI — `src/pages/MultiplayerLobby.tsx`
-  - [ ] Two modes: "Create Room" and "Join Room"
-  - [ ] Create room shows room code to share
-  - [ ] Join room has input for room code
-  - [ ] Player name input
-  - [ ] Show list of players in room
-  - [ ] "Start Game" button (only room creator)
-  - [ ] Countdown timer before game starts
+- [x] Create room lobby UI — `src/pages/MultiplayerLobby.tsx`
+  - [x] Two modes: "Create Room" and "Join Room"
+  - [x] Create room shows room code to share
+  - [x] Join room has input for room code
+  - [x] Player name input
+  - [x] Show list of players in room
+  - [x] "Start Game" button (only room creator)
+  - [x] Countdown timer before game starts
 
-- [ ] Create multiplayer game UI — `src/pages/MultiplayerGame.tsx`
-  - [ ] Full-screen game view
-  - [ ] Show current card (Spanish word)
-  - [ ] Text input for English translation
-  - [ ] Submit on Enter key
-  - [ ] Real-time scoreboard showing both players
-  - [ ] Timer countdown (60 seconds total, 5 seconds per card)
-  - [ ] Visual feedback on correct/incorrect answers
+- [x] Create multiplayer game UI — `src/pages/MultiplayerGame.tsx`
+  - [x] Full-screen game view
+  - [x] Show current card (Spanish word)
+  - [x] Text input for English translation
+  - [x] Submit on Enter key
+  - [x] Real-time scoreboard showing both players
+  - [x] Timer countdown (60 seconds total, 5 seconds per card)
+  - [x] Visual feedback on correct/incorrect answers
 
-- [ ] Create match results UI — `src/components/MatchResults.tsx`
-  - [ ] Show final scores with winner highlighted
-  - [ ] List cards both players struggled with
-  - [ ] "Play Again" and "Back to Home" buttons
-  - [ ] Share result option (copy to clipboard)
+- [x] Create match results UI — `src/pages/MultiplayerResults.tsx`
+  - [x] Show final scores with winner highlighted
+  - [x] List cards both players struggled with
+  - [x] "Play Again" and "Back to Home" buttons
+  - [ ] Share result option (copy to clipboard) — deferred
 
-- [ ] Add multiplayer navigation — `src/App.tsx`
-  - [ ] Add "Multiplayer" option to navigation/menu
-  - [ ] Add 'multiplayer-lobby' and 'multiplayer-game' to Page type
-  - [ ] Route to appropriate components
+- [x] Add multiplayer navigation — `src/App.tsx`
+  - [x] Add "Multiplayer" option to navigation/menu (GameHub)
+  - [x] Add 'multiplayer-lobby', 'multiplayer-game', 'multiplayer-results' to Page type
+  - [x] Route to appropriate components
 
-- [ ] Store match history — `src/utils/matchHistory.ts`
-  - [ ] Save completed matches to localStorage
-  - [ ] Track: date, opponent, score, win/loss
-  - [ ] Display match history in Stats or dedicated page
+- [x] Store match history — `src/utils/matchHistory.ts`
+  - [x] Save completed matches to localStorage
+  - [x] Track: date, opponent, score, win/loss
+  - [ ] Display match history in Stats or dedicated page — deferred
 
 **Acceptance Criteria:**
 - User can create a room and receive shareable code

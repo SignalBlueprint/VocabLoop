@@ -124,3 +124,55 @@
 - ConflictResolver component renders correctly
 
 ---
+
+## 2.2 Multiplayer Sprint Mode
+**Completed:** 2026-01-06T17:15:00Z
+**Files Changed:**
+
+**Server (new `server/` directory):**
+- server/package.json — Node.js project with ws and uuid dependencies
+- server/tsconfig.json — TypeScript configuration for server
+- server/src/types.ts — Type definitions (RoomState, Player, Room, GameCard, ClientMessage, ServerMessage)
+- server/src/cards.ts — 80-word Spanish vocabulary pool with multiple accepted English translations
+- server/src/game.ts — Room management, game logic, scoring (first correct = 2pts, second = 1pt)
+- server/src/index.ts — WebSocket server entry point on port 3001
+
+**Client:**
+- src/hooks/useMultiplayer.ts — WebSocket client hook managing connection, room state, game state
+- src/pages/MultiplayerLobby.tsx — Create/join room UI, waiting room with player list, start game button
+- src/pages/MultiplayerGame.tsx — Active gameplay: Spanish word display, answer input, real-time scoreboard, timer
+- src/pages/MultiplayerResults.tsx — End-of-game results: final scores, winner highlight, word breakdown, accuracy stats
+- src/utils/matchHistory.ts — localStorage persistence for match history with stats aggregation
+- src/components/GameHub.tsx — Added Multiplayer as featured game option
+- src/types/index.ts — Added 'multiplayer-lobby', 'multiplayer-game', 'multiplayer-results' to Page type
+- src/App.tsx — Added imports and routes for multiplayer pages
+
+**Documentation:**
+- docs/MULTIPLAYER_PROTOCOL.md — WebSocket protocol specification
+
+**Implementation Notes:**
+- WebSocket server in separate `server/` directory with own package.json
+- Room state machine: DISCONNECTED → CONNECTING → WAITING → COUNTDOWN → PLAYING → FINISHED
+- 6-character alphanumeric room codes generated server-side
+- 60-second total game time with 5 seconds per card
+- First correct answer = 2 points, second correct = 1 point
+- Server validates all answers against accepted translations (case-insensitive)
+- Client hook manages all WebSocket state with automatic cleanup on unmount
+- Match results saved to localStorage with getMatchStats() for aggregation
+- Multiplayer featured prominently in GameHub grid
+
+**Deferred Items:**
+- Share result option (copy to clipboard)
+- Match history display in Stats page
+- Rematch with same players
+- Spectator mode
+
+**Verification:**
+- All 277 unit tests pass
+- Build compiles successfully
+- Multiplayer option visible in Games & Practice hub
+- Lobby UI renders create/join modes correctly
+- Game UI displays Spanish words, input, scoreboard, timer
+- Results UI shows winner, scores, and word breakdown
+
+---

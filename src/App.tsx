@@ -24,6 +24,9 @@ import { Quiz } from './pages/Quiz';
 import { TypingChallenge } from './pages/TypingChallenge';
 import { CustomStudy } from './pages/CustomStudy';
 import { ListeningMode } from './pages/ListeningMode';
+import { MultiplayerLobby } from './pages/MultiplayerLobby';
+import { MultiplayerGame } from './pages/MultiplayerGame';
+import { MultiplayerResults } from './pages/MultiplayerResults';
 import { AddCard } from './components/AddCard';
 import { isImmersionEnabled, toggleImmersionMode } from './utils/immersionMode';
 import { areSoundsEnabled, toggleSounds } from './utils/sounds';
@@ -122,6 +125,12 @@ function App() {
         return <CustomStudy onNavigate={navigate} showToast={showToast} isDark={isDark} />;
       case 'listening':
         return <ListeningMode onNavigate={navigate} showToast={showToast} isDark={isDark} />;
+      case 'multiplayer-lobby':
+        return <MultiplayerLobby onNavigate={navigate} isDark={isDark} showToast={showToast} />;
+      case 'multiplayer-game':
+        return <MultiplayerGame onNavigate={navigate} isDark={isDark} showToast={showToast} />;
+      case 'multiplayer-results':
+        return <MultiplayerResults onNavigate={navigate} isDark={isDark} />;
       default:
         return <Home key={refreshKey} onNavigate={navigate} isDark={isDark} showToast={showToast} />;
     }
