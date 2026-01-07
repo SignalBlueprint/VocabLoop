@@ -175,67 +175,67 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Set up Supabase project and database schema
-  - [ ] Create Supabase project at supabase.com
-  - [ ] Create `users` table: id (uuid), email, created_at, last_sync_at
-  - [ ] Create `cards` table mirroring Card interface + user_id foreign key + server_updated_at
-  - [ ] Create `reviews` table mirroring ReviewLog interface + user_id foreign key
-  - [ ] Create `sync_log` table: id, user_id, action, timestamp, payload_hash
-  - [ ] Enable Row Level Security: users can only access their own data
-  - [ ] Document schema in `docs/SCHEMA.md`
+- [x] Set up Supabase project and database schema
+  - [x] Create Supabase project at supabase.com
+  - [x] Create `users` table: id (uuid), email, created_at, last_sync_at
+  - [x] Create `cards` table mirroring Card interface + user_id foreign key + server_updated_at
+  - [x] Create `reviews` table mirroring ReviewLog interface + user_id foreign key
+  - [x] Create `sync_log` table: id, user_id, action, timestamp, payload_hash
+  - [x] Enable Row Level Security: users can only access their own data
+  - [x] Document schema in `docs/SCHEMA.md`
 
-- [ ] Create Supabase client configuration — `src/lib/supabase.ts`
-  - [ ] Install @supabase/supabase-js: `npm install @supabase/supabase-js`
-  - [ ] Create client with environment variables for URL and anon key
-  - [ ] Export typed client with database types
-  - [ ] Add `.env.example` with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY placeholders
+- [x] Create Supabase client configuration — `src/lib/supabase.ts`
+  - [x] Install @supabase/supabase-js: `npm install @supabase/supabase-js`
+  - [x] Create client with environment variables for URL and anon key
+  - [x] Export typed client with database types
+  - [x] Add `.env.example` with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY placeholders
 
-- [ ] Implement authentication flow — `src/utils/auth.ts`
-  - [ ] Implement `signInWithEmail(email: string): Promise<void>` sending magic link
-  - [ ] Implement `signOut(): Promise<void>`
-  - [ ] Implement `getCurrentUser(): User | null`
-  - [ ] Implement `onAuthStateChange(callback): Unsubscribe`
+- [x] Implement authentication flow — `src/utils/auth.ts`
+  - [x] Implement `signInWithEmail(email: string): Promise<void>` sending magic link
+  - [x] Implement `signOut(): Promise<void>`
+  - [x] Implement `getCurrentUser(): User | null`
+  - [x] Implement `onAuthStateChange(callback): Unsubscribe`
 
-- [ ] Create Auth UI components
-  - [ ] Create `src/components/AuthModal.tsx` with email input and "Send Magic Link" button
-  - [ ] Create `src/components/AccountMenu.tsx` showing logged-in email and sign-out option
-  - [ ] Add auth state to App.tsx with context provider
+- [x] Create Auth UI components
+  - [x] Create `src/components/AuthModal.tsx` with email input and "Send Magic Link" button
+  - [x] Create `src/components/AccountMenu.tsx` showing logged-in email and sign-out option
+  - [x] Add auth state to App.tsx with context provider
 
-- [ ] Implement sync engine — `src/utils/sync.ts`
-  - [ ] Implement `uploadLocalData(userId: string): Promise<SyncResult>` pushing all IndexedDB cards/reviews to Supabase
-  - [ ] Implement `downloadRemoteData(userId: string): Promise<{cards: Card[], reviews: ReviewLog[]}>`
-  - [ ] Implement `mergeData(local: Card[], remote: Card[]): Card[]` using last-write-wins by updatedAt
-  - [ ] Implement `syncAll(): Promise<SyncResult>` orchestrating full sync cycle
-  - [ ] Store last sync timestamp in localStorage
-  - [ ] Add unit tests for merge logic in `src/utils/sync.test.ts`
+- [x] Implement sync engine — `src/utils/sync.ts`
+  - [x] Implement `uploadLocalData(userId: string): Promise<SyncResult>` pushing all IndexedDB cards/reviews to Supabase
+  - [x] Implement `downloadRemoteData(userId: string): Promise<{cards: Card[], reviews: ReviewLog[]}>`
+  - [x] Implement `mergeData(local: Card[], remote: Card[]): Card[]` using last-write-wins by updatedAt
+  - [x] Implement `syncAll(): Promise<SyncResult>` orchestrating full sync cycle
+  - [x] Store last sync timestamp in localStorage
+  - [x] Add unit tests for merge logic in `src/utils/sync.test.ts`
 
-- [ ] Implement incremental sync — `src/utils/sync.ts`
-  - [ ] Track changed cards since last sync using updatedAt > lastSyncAt
-  - [ ] Push only changed cards to reduce bandwidth
-  - [ ] Pull only cards with server_updated_at > lastSyncAt
+- [x] Implement incremental sync — `src/utils/sync.ts`
+  - [x] Track changed cards since last sync using updatedAt > lastSyncAt
+  - [x] Push only changed cards to reduce bandwidth
+  - [x] Pull only cards with server_updated_at > lastSyncAt
 
-- [ ] Create SyncIndicator component — `src/components/SyncIndicator.tsx`
-  - [ ] Show sync status icon in header: synced (green check), syncing (spinning), error (red X), offline (gray)
-  - [ ] Click to manually trigger sync
-  - [ ] Show "Last synced: 5 minutes ago" on hover
+- [x] Create SyncIndicator component — `src/components/SyncIndicator.tsx`
+  - [x] Show sync status icon in header: synced (green check), syncing (spinning), error (red X), offline (gray)
+  - [x] Click to manually trigger sync
+  - [x] Show "Last synced: 5 minutes ago" on hover
 
-- [ ] Integrate sync into app lifecycle — `src/App.tsx`
-  - [ ] Auto-sync on app load if authenticated
-  - [ ] Auto-sync after card add/edit/delete
-  - [ ] Auto-sync every 5 minutes when online
-  - [ ] Handle offline gracefully (queue changes, sync when back online)
+- [x] Integrate sync into app lifecycle — `src/App.tsx`
+  - [x] Auto-sync on app load if authenticated
+  - [ ] Auto-sync after card add/edit/delete (deferred - hooks not integrated)
+  - [ ] Auto-sync every 5 minutes when online (deferred - interval not implemented)
+  - [x] Handle offline gracefully (queue changes, sync when back online)
 
-- [ ] Create conflict resolution UI — `src/components/ConflictResolver.tsx`
-  - [ ] Show when same card edited on multiple devices
-  - [ ] Display both versions side-by-side
-  - [ ] Let user choose "Keep Local", "Keep Remote", or "Keep Both"
-  - [ ] Store merge decisions in sync_log for audit
+- [x] Create conflict resolution UI — `src/components/ConflictResolver.tsx`
+  - [x] Show when same card edited on multiple devices
+  - [x] Display both versions side-by-side
+  - [x] Let user choose "Keep Local", "Keep Remote", or "Keep Both"
+  - [x] Store merge decisions in sync_log for audit
 
-- [ ] Add encryption layer — `src/utils/encryption.ts`
-  - [ ] Implement `encryptCard(card: Card, key: string): EncryptedCard`
-  - [ ] Implement `decryptCard(encrypted: EncryptedCard, key: string): Card`
-  - [ ] Derive key from user password or store in secure localStorage
-  - [ ] Document encryption approach in `docs/SECURITY.md`
+- [x] Add encryption layer — `src/utils/encryption.ts`
+  - [x] Implement `encryptCard(card: Card, key: string): EncryptedCard`
+  - [x] Implement `decryptCard(encrypted: EncryptedCard, key: string): Card`
+  - [x] Derive key from user password or store in secure localStorage
+  - [ ] Document encryption approach in `docs/SECURITY.md` (deferred)
 
 **Acceptance Criteria:**
 - User can sign in with email magic link

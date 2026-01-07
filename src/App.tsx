@@ -3,9 +3,13 @@ import type { Page } from './types';
 import { useToast } from './components/Toast';
 import { useDarkMode } from './hooks/useDarkMode';
 import { useOnlineStatus } from './hooks/useOnlineStatus';
+import { useAuth } from './hooks/useAuth';
 import { Onboarding, hasCompletedOnboarding } from './components/Onboarding';
 import { KeyboardShortcuts } from './components/KeyboardShortcuts';
 import { AchievementNotification, useAchievementNotifications } from './components/Achievements';
+import { AuthModal } from './components/AuthModal';
+import { AccountMenu } from './components/AccountMenu';
+import { SyncIndicator } from './components/SyncIndicator';
 import { Home } from './pages/Home';
 import { Review } from './pages/Review';
 import { Library } from './pages/Library';
@@ -29,9 +33,11 @@ function App() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [showOnboarding, setShowOnboarding] = useState(!hasCompletedOnboarding());
   const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const { showToast, ToastContainer } = useToast();
   const { isDark, toggle: toggleDarkMode } = useDarkMode();
   const isOnline = useOnlineStatus();
+  const { isAuthenticated, isConfigured, email, handleSignOut } = useAuth();
   const [immersionMode, setImmersionMode] = useState(isImmersionEnabled());
   const [soundsEnabled, setSoundsEnabled] = useState(areSoundsEnabled());
   const { notification, dismissNotification } = useAchievementNotifications(isDark, showToast);
@@ -152,6 +158,31 @@ function App() {
                 <span className="hidden sm:inline">Offline</span>
               </div>
             )}
+            {/* Sync indicator */}
+            {isAuthenticated && (
+              <SyncIndicator
+                isDark={isDark}
+                isAuthenticated={isAuthenticated}
+                onSyncComplete={() => setRefreshKey((k) => k + 1)}
+              />
+            )}
+            {/* Account/Sign in */}
+            {isConfigured && (
+              isAuthenticated && email ? (
+                <AccountMenu
+                  email={email}
+                  isDark={isDark}
+                  onSignOut={handleSignOut}
+                />
+              ) : (
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition-colors"
+                >
+                  Sign in
+                </button>
+              )
+            )}
             <button
               onClick={handleToggleSounds}
               className={`p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600 ${
@@ -268,6 +299,14 @@ function App() {
         <AchievementNotification
           achievement={notification}
           onClose={dismissNotification}
+          isDark={isDark}
+        />
+      )}
+
+      {/* Auth modal */}
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => setShowAuthModal(false)}
           isDark={isDark}
         />
       )}

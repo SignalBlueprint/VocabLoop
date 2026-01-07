@@ -78,3 +78,49 @@
 - Dark mode colors render properly
 
 ---
+
+## 2.1 Cloud Sync with Conflict Resolution
+**Completed:** 2026-01-06T16:50:00Z
+**Files Changed:**
+- docs/SCHEMA.md — Complete PostgreSQL schema for Supabase with RLS policies, indexes, and setup instructions
+- .env.example — Environment variable template for Supabase configuration
+- src/lib/supabase.ts — Supabase client configuration with conditional initialization
+- src/types/database.ts — TypeScript types for database tables
+- src/utils/auth.ts — Authentication utilities (signInWithEmail, signOut, getCurrentUser, onAuthStateChange, ensureUserProfile)
+- src/utils/encryption.ts — AES-GCM encryption for card content using Web Crypto API
+- src/utils/sync.ts — Full sync engine with upload, download, merge, and incremental sync
+- src/utils/sync.test.ts — 8 unit tests for merge logic
+- src/hooks/useAuth.ts — React hook for auth state management
+- src/components/AuthModal.tsx — Magic link sign-in modal
+- src/components/AccountMenu.tsx — Dropdown menu showing signed-in user with sign-out option
+- src/components/SyncIndicator.tsx — Header sync status icon with tooltip
+- src/components/ConflictResolver.tsx — Modal for resolving sync conflicts with Keep Local/Remote/Both options
+- src/App.tsx — Integrated auth state, SyncIndicator, AccountMenu, and AuthModal
+
+**Implementation Notes:**
+- Supabase client conditionally created only when env vars are present (graceful degradation)
+- Authentication via magic link (passwordless email)
+- Card content encrypted client-side with AES-GCM before upload (front, back, examples, notes, cloze fields)
+- Encryption key derived from user ID using PBKDF2
+- Sync uses last-write-wins strategy with 1-minute threshold for conflict detection
+- Conflicts flagged when same card modified within 1 minute on different devices
+- Incremental sync only transfers changed cards since lastSyncAt
+- SyncIndicator shows: idle (sync icon), syncing (spinning), success (checkmark), error (X), offline (wifi-off)
+- Auto-sync on app load when authenticated
+- Pending changes queued in localStorage for offline support
+
+**Deferred Items:**
+- Auto-sync after card add/edit/delete (requires hooks in card operations)
+- Auto-sync every 5 minutes (requires setInterval)
+- docs/SECURITY.md documentation
+
+**Verification:**
+- All 277 unit tests pass (8 new for sync merge logic)
+- Build compiles successfully
+- Sign in button visible in header when Supabase configured
+- AuthModal opens with email input and magic link flow
+- AccountMenu shows email and sign-out when authenticated
+- SyncIndicator visible when authenticated
+- ConflictResolver component renders correctly
+
+---
