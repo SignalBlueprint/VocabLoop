@@ -243,3 +243,100 @@
 - Session summary shows all metrics and insights
 
 ---
+
+## 3.1 Conversational Practice Mode (Infrastructure)
+**Completed:** 2026-01-08T17:50:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/LLM_RESEARCH.md — Comprehensive LLM provider evaluation comparing OpenAI GPT-4o-mini, Anthropic Claude 3.5 Haiku, and Ollama/Llama local models with pricing, latency, and capability comparison
+
+**LLM Client Abstraction:**
+- src/lib/llm.ts — Multi-provider LLM client with:
+  - `LLMProvider` interface with `sendMessage()` and `streamMessage()` methods
+  - `OpenAIProvider` — GPT-4o-mini adapter with streaming SSE support
+  - `AnthropicProvider` — Claude Haiku adapter with Anthropic API format
+  - `OllamaProvider` — Local model adapter for privacy mode
+  - `createLLMProvider()` — Factory function for provider instantiation
+  - `getBestAvailableProvider()` — Auto-detect configured providers
+  - API key storage/retrieval from localStorage
+  - Error handling with `LLMError` class (rate_limit, invalid_key, network, etc.)
+  - Retry helper with exponential backoff
+
+**Conversation Prompts:**
+- src/prompts/conversation.ts — Character personas and prompt engineering:
+  - `CharacterPersona` interface with name, avatar, personality, topics
+  - `CHARACTERS` array with María (friendly neighbor) as POC character
+  - `buildSystemPrompt()` — Generates LLM system prompt with vocabulary constraints
+  - `extractNewWordFromResponse()` — Detects new vocabulary introduced by AI
+  - `isPrimarilyEnglish()` — Detects if user wrote in English
+  - `CONVERSATION_LIMITS` — POC limits (5 turns, 500 tokens, 10/day)
+  - Difficulty levels: beginner, intermediate, advanced
+
+**Vocabulary Extraction:**
+- src/utils/vocabExtract.ts — Extract user's known vocabulary from cards:
+  - `getMasteryLevel()` — Classify cards as learning/familiar/mastered
+  - `extractWordFromCard()` — Get Spanish word from BASIC/VERB/CLOZE cards
+  - `extractWordsFromSentence()` — Parse words with stopword filtering
+  - `extractVocabulary()` — Get VocabItem array with mastery levels
+  - `buildVocabContext()` — Generate comma-separated vocab string for prompts
+- src/utils/vocabExtract.test.ts — 22 unit tests for vocabulary extraction
+
+**Conversation Tracking:**
+- src/utils/conversationReview.ts — Track conversation sessions and learned words:
+  - `recordConversationSession()` — Save completed sessions to localStorage
+  - `LearnedWord` interface for words introduced during conversations
+  - `getConversationStats()` — Aggregate statistics
+  - `canStartConversation()` — Check daily limit (10/day)
+  - `getFlashcardSuggestions()` — Convert learned words to card suggestions
+
+**UI Components:**
+- src/components/ChatSession.tsx — Core chat interface:
+  - Real-time streaming message display
+  - Typing indicator with animated dots
+  - Turn counter showing progress to limit
+  - New word highlighting when AI introduces vocabulary
+  - English detection with Spanish encouragement
+  - Error states with retry capability
+  - Session end handling
+- src/pages/Conversation.tsx — Full conversation page with:
+  - Provider setup (OpenAI/Anthropic selection, API key input)
+  - Character selection screen
+  - Difficulty level selector
+  - Vocabulary summary showing card count
+  - Cost estimates for API usage
+  - Help links to get API keys
+
+**Navigation:**
+- src/types/index.ts — Added 'conversation' to Page type
+- src/components/GameHub.tsx — Added Conversation as featured game (second position)
+- src/App.tsx — Added ConversationPage import and route
+
+**Implementation Notes:**
+- Primary provider: OpenAI GPT-4o-mini (~$0.001/conversation)
+- Secondary provider: Anthropic Claude Haiku (~$0.004/conversation)
+- Optional: Ollama for local/privacy mode
+- API keys stored in localStorage (client-side only for POC)
+- Streaming responses for better UX
+- Vocabulary constraints in system prompt guide AI to use known words
+- New word introduction format: "[word] - it means [meaning]"
+- Session limits: 5 turns max, 500 tokens per response
+- Featured in GameHub 2x2 grid (replacing Matching as featured)
+
+**Deferred Items:**
+- Speech recognition integration (requires Web Speech API)
+- Pronunciation feedback
+- Backend proxy for API key security
+- More character personas
+- Conversation history in Stats page
+
+**Verification:**
+- All 339 unit tests pass (22 new for vocab extraction)
+- TypeScript type check passes
+- Build compiles successfully
+- Conversation accessible from GameHub
+- Provider setup screen renders correctly
+- Character selection and difficulty work
+- Chat session UI displays messages and streaming
+
+---

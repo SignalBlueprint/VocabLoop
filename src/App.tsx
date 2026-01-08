@@ -28,6 +28,7 @@ import { MultiplayerLobby } from './pages/MultiplayerLobby';
 import { MultiplayerGame } from './pages/MultiplayerGame';
 import { MultiplayerResults } from './pages/MultiplayerResults';
 import { SmartSession } from './pages/SmartSession';
+import { ConversationPage } from './pages/Conversation';
 import { AddCard } from './components/AddCard';
 import { isImmersionEnabled, toggleImmersionMode } from './utils/immersionMode';
 import { areSoundsEnabled, toggleSounds } from './utils/sounds';
@@ -134,6 +135,8 @@ function App() {
         return <MultiplayerResults onNavigate={navigate} isDark={isDark} />;
       case 'smart-session':
         return <SmartSession onNavigate={navigate} showToast={showToast} isDark={isDark} />;
+      case 'conversation':
+        return <ConversationPage onNavigate={navigate} isDark={isDark} />;
       default:
         return <Home key={refreshKey} onNavigate={navigate} isDark={isDark} showToast={showToast} />;
     }

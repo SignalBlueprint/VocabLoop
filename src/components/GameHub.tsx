@@ -32,6 +32,17 @@ const GAMES: GameInfo[] = [
     featured: true,
   },
   {
+    id: 'conversation',
+    name: 'Conversation',
+    description: 'Chat with AI in Spanish',
+    icon: '💬',
+    color: {
+      light: 'from-blue-500 to-cyan-500',
+      dark: 'from-blue-600 to-cyan-600',
+    },
+    featured: true,
+  },
+  {
     id: 'multiplayer-lobby',
     name: 'Multiplayer',
     description: 'Race a friend!',
@@ -62,7 +73,6 @@ const GAMES: GameInfo[] = [
       light: 'from-pink-500 to-rose-500',
       dark: 'from-pink-600 to-rose-600',
     },
-    featured: true,
   },
   {
     id: 'quiz',
