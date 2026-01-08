@@ -726,11 +726,12 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
   - [ ] Netflix language learning extension
   - [ ] Kindle vocabulary builder integration
 
-- [ ] Implement skill tree gamification
-  - [ ] Define skill categories (Conversationalist, Grammar Geek, Culture Maven)
-  - [ ] Create unlock requirements for each skill
-  - [ ] Design visual skill tree UI
-  - [ ] Add badges and achievements per skill
+- [x] Implement skill tree gamification
+  - [x] Define skill categories (9 categories with 35+ skills)
+  - [x] Create unlock requirements for each skill
+  - [x] Design visual skill tree UI (SkillTree component)
+  - [x] Add badges and achievements per skill
+  - [x] Document system in docs/SKILL_TREE.md
 
 - [ ] Expand vocabulary corpus
   - [ ] Grow from 500 to 50,000 words

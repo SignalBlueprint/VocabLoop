@@ -648,3 +648,62 @@
 4. Analytics & Growth (ongoing)
 
 ---
+
+## Moonshot Phase 3: Skill Tree Gamification
+**Completed:** 2026-01-08T22:35:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/SKILL_TREE.md — Comprehensive skill tree design document with:
+  - 9 skill categories (Vocabulary, Consistency, Precision, Speed, Mastery, Explorer, Social, Conversationalist, Pronunciation)
+  - 35+ individual skills with tiered requirements
+  - XP and leveling system design
+  - Badge display and featured badges
+  - Visual skill tree layout
+  - Progress tracking data model
+
+**Implementation:**
+- src/utils/skills.ts — Skill tree logic:
+  - Type definitions (SkillCategory, Skill, SkillProgress, UserSkillState)
+  - SKILL_CATEGORIES constant with all category and skill definitions
+  - localStorage persistence (getSkillState, saveSkillState)
+  - Progress calculation (checkSkillProgress, calculateProgress)
+  - Helper functions (getSkillById, getCategoryById, getUnlockedSkills)
+  - Level calculation from XP
+  - Featured badges management
+
+- src/components/SkillTree.tsx — Visual skill tree UI:
+  - Full-screen modal with category grid
+  - Category detail view with individual skills
+  - Progress bars for in-progress skills
+  - Unlocked/locked skill states
+  - Featured badge selection (star button)
+  - XP and level display
+  - Badge component for use elsewhere
+
+**Skill Categories:**
+1. Vocabulario — Word learning milestones (50-2500 words)
+2. Consistencia — Streak achievements (3-365 days)
+3. Precisión — Accuracy milestones (80-95%)
+4. Velocidad — Speed achievements (<3s to <1s avg)
+5. Maestría — Mastery milestones (25-1000 mastered words)
+6. Explorador — Feature usage achievements
+7. Social — Multiplayer achievements
+8. Conversador — AI conversation achievements
+9. Pronunciación — Pronunciation practice achievements
+
+**XP System:**
+- Tier 1: 100 XP
+- Tier 2: 250 XP
+- Tier 3: 500 XP
+- Tier 4: 1000 XP
+- Tier 5: 2500 XP
+
+**Verification:**
+- TypeScript compilation passes
+- All 339 tests pass
+- Build succeeds
+- Skill categories and requirements defined
+- UI component renders correctly
+
+---
