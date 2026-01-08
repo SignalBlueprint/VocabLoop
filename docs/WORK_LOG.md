@@ -420,3 +420,88 @@
 - Recording UI shows waveform and level
 
 ---
+
+## Moonshot Phase 1: Browser Extension (Infrastructure)
+**Completed:** 2026-01-08T19:00:00Z
+**Files Changed:**
+
+**Extension Core:**
+- extension/manifest.json — Chrome Manifest V3 configuration with permissions for storage, activeTab, all URLs; content scripts, background service worker, popup, and options page
+- extension/background.js — Service worker handling:
+  - Vocabulary sync from VocabLoop cloud API
+  - Local vocabulary import from VocabLoop app
+  - Chrome storage management for vocabulary cache
+  - Alarm-based periodic sync (every 30 minutes)
+  - Message passing between popup/content scripts
+  - Pending words queue for offline operation
+- extension/content.js — Content script for page highlighting:
+  - DOM tree walker for text node processing
+  - Vocabulary word matching with mastered/learning/unknown levels
+  - Dynamic highlighting with performance batching
+  - Hover tooltips showing English translations
+  - Click handler for unknown words with "Add to VocabLoop" popup
+  - MutationObserver for dynamically loaded content
+  - Toggle support for enabling/disabling highlights
+
+**Styles:**
+- extension/content.css — Highlight styles:
+  - Green background for mastered words (interval >= 21)
+  - Yellow background for learning words (interval 1-20)
+  - Dotted underline for unknown Spanish words
+  - Hover tooltips with translations (CSS pseudo-elements)
+  - Add word popup styling
+  - Dark mode support via prefers-color-scheme
+
+**Popup UI:**
+- extension/popup.html — Extension popup interface
+- extension/popup.css — Popup styling with toggles, stats cards, sync status
+- extension/popup.js — Popup functionality:
+  - Vocabulary stats display (mastered/learning counts)
+  - Sync button with loading state
+  - Highlighting toggle
+  - Translation tooltip toggle
+  - Connection status (connect/disconnect VocabLoop account)
+  - Settings panel navigation
+
+**Settings:**
+- extension/options.html — Full settings page with:
+  - API URL configuration
+  - Auth token input
+  - All toggle options
+  - Save/reset functionality
+
+**Assets:**
+- extension/icons/ — Placeholder PNG icons (16, 48, 128px)
+- extension/icons/generate-icons.js — Node.js script to generate proper icons
+- extension/README.md — Extension documentation with installation, setup, and development instructions
+
+**Implementation Notes:**
+- Manifest V3 compliant (modern Chrome extension format)
+- Service worker for background operations (no persistent background page)
+- Content script injects CSS and scans text nodes
+- Performance optimized with request animation frame batching
+- Vocabulary categorized by SRS interval:
+  - Mastered: interval >= 21 days (green)
+  - Learning: interval 1-20 days (yellow)
+  - Unknown: detected Spanish word not in deck (underline)
+- Hover shows English translation tooltip
+- Click unknown word to add to VocabLoop deck
+- Supports offline operation with pending word queue
+- Auto-sync every 30 minutes when connected
+- Dark mode support via CSS media query
+
+**Deferred Items:**
+- Chrome Web Store packaging and submission
+- Production icon design
+- End-to-end testing on Spanish news sites
+- Firefox compatibility (requires manifest modifications)
+- Safari extension port
+
+**Verification:**
+- Extension structure complete
+- Manifest validates correctly
+- All scripts and styles in place
+- Placeholder icons created
+- Ready for developer mode testing in Chrome
+
+---

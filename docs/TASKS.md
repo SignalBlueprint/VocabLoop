@@ -595,38 +595,38 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Set up extension project — `extension/`
-  - [ ] Create manifest.json (Manifest V3 for Chrome)
-  - [ ] Create background.js service worker
-  - [ ] Create content.js content script
-  - [ ] Create popup.html/popup.js for extension popup
-  - [ ] Add extension icons (16, 48, 128px)
+- [x] Set up extension project — `extension/`
+  - [x] Create manifest.json (Manifest V3 for Chrome)
+  - [x] Create background.js service worker
+  - [x] Create content.js content script
+  - [x] Create popup.html/popup.js for extension popup
+  - [x] Add extension icons (16, 48, 128px)
 
-- [ ] Implement vocabulary highlighting — `extension/content.js`
-  - [ ] Inject CSS for highlight classes (.vocab-known, .vocab-learning, .vocab-unknown)
-  - [ ] Get vocabulary list from extension storage (synced from main app)
-  - [ ] Scan page text nodes for Spanish words
-  - [ ] Wrap matched words in spans with appropriate class
-  - [ ] Green = mastered (interval >= 21), Yellow = learning (interval 1-20), underline = unknown
+- [x] Implement vocabulary highlighting — `extension/content.js`
+  - [x] Inject CSS for highlight classes (.vocab-known, .vocab-learning, .vocab-unknown)
+  - [x] Get vocabulary list from extension storage (synced from main app)
+  - [x] Scan page text nodes for Spanish words
+  - [x] Wrap matched words in spans with appropriate class
+  - [x] Green = mastered (interval >= 21), Yellow = learning (interval 1-20), underline = unknown
 
-- [ ] Implement word click handler — `extension/content.js`
-  - [ ] Click highlighted word shows popup with translation
-  - [ ] Click unknown word shows "Add to VocabLoop" button
-  - [ ] Capture sentence context for cloze card creation
+- [x] Implement word click handler — `extension/content.js`
+  - [x] Click highlighted word shows popup with translation
+  - [x] Click unknown word shows "Add to VocabLoop" button
+  - [x] Capture sentence context for cloze card creation
 
-- [ ] Create vocabulary sync — `extension/background.js`
-  - [ ] Fetch vocabulary from VocabLoop cloud (requires auth)
-  - [ ] Store in extension storage
-  - [ ] Refresh every 30 minutes
-  - [ ] Show sync status in popup
+- [x] Create vocabulary sync — `extension/background.js`
+  - [x] Fetch vocabulary from VocabLoop cloud (requires auth)
+  - [x] Store in extension storage
+  - [x] Refresh every 30 minutes
+  - [x] Show sync status in popup
 
-- [ ] Create extension popup UI — `extension/popup.html`
-  - [ ] Show connection status to VocabLoop account
-  - [ ] Display stats: X words known, Y learning
-  - [ ] Toggle highlighting on/off
-  - [ ] Link to open main VocabLoop app
+- [x] Create extension popup UI — `extension/popup.html`
+  - [x] Show connection status to VocabLoop account
+  - [x] Display stats: X words known, Y learning
+  - [x] Toggle highlighting on/off
+  - [x] Link to open main VocabLoop app
 
-- [ ] Build and test extension
+- [ ] Build and test extension (deferred - requires manual browser testing)
   - [ ] Test on Spanish news sites (El País, BBC Mundo)
   - [ ] Test performance on long pages
   - [ ] Package for Chrome Web Store

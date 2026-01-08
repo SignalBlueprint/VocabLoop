@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VocabLoop Extension Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      color: #1f2937;
+      background: #f9fafb;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 20px;
+      color: #10b981;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .section h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+    }
+
+    .form-group small {
+      display: block;
+      margin-top: 4px;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .toggle-group:last-child {
+      border-bottom: none;
+    }
+
+    .toggle-label {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .toggle-label span {
+      font-weight: 500;
+    }
+
+    .toggle-label small {
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #d1d5db;
+      border-radius: 24px;
+      transition: 0.3s;
+    }
+
+    .toggle-slider::before {
+      position: absolute;
+      content: '';
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: #10b981;
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(20px);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #059669;
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .status {
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .status.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <img src="icons/icon48.png" alt="" width="32" height="32">
+      VocabLoop Settings
+    </h1>
+
+    <div class="section">
+      <h2>Connection</h2>
+      <div class="form-group">
+        <label for="apiUrl">API URL</label>
+        <input type="url" id="apiUrl" placeholder="https://api.vocabloop.app">
+        <small>The URL of your VocabLoop API server</small>
+      </div>
+      <div class="form-group">
+        <label for="authToken">Authentication Token</label>
+        <input type="password" id="authToken" placeholder="Your API token">
+        <small>Get this from your VocabLoop account settings</small>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Highlighting</h2>
+      <div class="toggle-group">
+        <div class="toggle-label">
+          <span>Enable Highlighting</span>
+          <small>Highlight vocabulary words on webpages</small>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="highlightingEnabled" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-group">
+        <div class="toggle-label">
+          <span>Show Translations</span>
+          <small>Display English translations on hover</small>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="showTranslations" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-group">
+        <div class="toggle-label">
+          <span>Auto Sync</span>
+          <small>Automatically sync vocabulary every 30 minutes</small>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="autoSync" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" id="saveBtn">Save Settings</button>
+      <button class="btn btn-secondary" id="resetBtn">Reset to Defaults</button>
+    </div>
+
+    <div id="statusMessage"></div>
+  </div>
+
+  <script>
+    const DEFAULT_SETTINGS = {
+      highlightingEnabled: true,
+      showTranslations: true,
+      autoSync: true,
+      apiUrl: '',
+      authToken: '',
+    };
+
+    async function loadSettings() {
+      const settings = await chrome.runtime.sendMessage({ type: 'GET_SETTINGS' });
+
+      document.getElementById('apiUrl').value = settings.apiUrl || '';
+      document.getElementById('authToken').value = settings.authToken || '';
+      document.getElementById('highlightingEnabled').checked = settings.highlightingEnabled !== false;
+      document.getElementById('showTranslations').checked = settings.showTranslations !== false;
+      document.getElementById('autoSync').checked = settings.autoSync !== false;
+    }
+
+    async function saveSettings() {
+      const settings = {
+        apiUrl: document.getElementById('apiUrl').value,
+        authToken: document.getElementById('authToken').value,
+        highlightingEnabled: document.getElementById('highlightingEnabled').checked,
+        showTranslations: document.getElementById('showTranslations').checked,
+        autoSync: document.getElementById('autoSync').checked,
+      };
+
+      await chrome.runtime.sendMessage({ type: 'UPDATE_SETTINGS', settings });
+
+      showStatus('Settings saved!', 'success');
+    }
+
+    async function resetSettings() {
+      if (confirm('Reset all settings to defaults?')) {
+        await chrome.runtime.sendMessage({ type: 'UPDATE_SETTINGS', settings: DEFAULT_SETTINGS });
+        await loadSettings();
+        showStatus('Settings reset to defaults', 'success');
+      }
+    }
+
+    function showStatus(message, type) {
+      const el = document.getElementById('statusMessage');
+      el.textContent = message;
+      el.className = 'status ' + type;
+      setTimeout(() => {
+        el.textContent = '';
+        el.className = '';
+      }, 3000);
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', saveSettings);
+    document.getElementById('resetBtn').addEventListener('click', resetSettings);
+
+    loadSettings();
+  </script>
+</body>
+</html>

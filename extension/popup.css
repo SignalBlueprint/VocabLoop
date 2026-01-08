@@ -1,0 +1,348 @@
+/**
+ * VocabLoop Extension Popup Styles
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 300px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: 14px;
+  color: #1f2937;
+  background: #ffffff;
+}
+
+.popup-container {
+  padding: 12px;
+}
+
+/* Header */
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #10b981;
+}
+
+.logo img {
+  border-radius: 4px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: #6b7280;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+/* Stats Section */
+.stats-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stat-card.mastered {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+}
+
+.stat-card.learning {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.stat-value {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sync Section */
+.sync-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.sync-icon {
+  font-size: 14px;
+}
+
+.sync-icon.syncing {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sync-btn {
+  padding: 4px 10px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sync-btn:hover {
+  background: #059669;
+}
+
+.sync-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Toggle Section */
+.toggle-section {
+  margin-bottom: 12px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.toggle-row:not(:last-child) {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #d1d5db;
+  border-radius: 22px;
+  transition: 0.3s;
+}
+
+.toggle-slider::before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: #10b981;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(18px);
+}
+
+/* Connection Section */
+.connection-section {
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.connection-section p {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.alt-text {
+  color: #9ca3af !important;
+  margin: 8px 0 !important;
+}
+
+.connected-text {
+  color: #10b981 !important;
+  font-weight: 500;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 10px 16px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primary-btn:hover {
+  background: #059669;
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 8px 16px;
+  background: white;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.secondary-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.text-btn:hover {
+  color: #ef4444;
+}
+
+/* Footer */
+.popup-footer {
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.popup-footer a {
+  font-size: 12px;
+  color: #10b981;
+  text-decoration: none;
+}
+
+.popup-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Settings Panel */
+.settings-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  padding: 12px;
+}
+
+.settings-panel .popup-header {
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.settings-panel .popup-header span {
+  font-weight: 600;
+}
+
+.settings-content {
+  padding-top: 12px;
+}
+
+.setting-group {
+  margin-bottom: 12px;
+}
+
+.setting-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+.setting-group input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.setting-group input:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+}
