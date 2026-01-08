@@ -709,11 +709,11 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
   - [x] Specify rate limits and pricing tiers (Free, Developer, Business, Enterprise)
   - [x] Document security considerations and example integrations
 
-- [ ] Build widget SDK — `sdk/`
-  - [ ] Create embeddable JavaScript bundle
-  - [ ] Implement authentication handshake
-  - [ ] Create React component library for integrators
-  - [ ] Build demo integration site
+- [x] Build widget SDK — `sdk/`
+  - [x] Create embeddable JavaScript bundle
+  - [x] Implement authentication handshake
+  - [x] Create React component library for integrators
+  - [ ] Build demo integration site (deferred)
 
 - [ ] Create API layer — `api/`
   - [ ] RESTful API for vocabulary CRUD

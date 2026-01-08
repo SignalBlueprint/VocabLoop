@@ -707,3 +707,102 @@
 - UI component renders correctly
 
 ---
+
+## Moonshot Phase 3: Widget SDK Implementation
+**Completed:** 2026-01-08T23:55:00Z
+**Files Changed:**
+
+**SDK Package Structure:**
+- sdk/package.json — NPM package configuration with build scripts, peer dependencies (React 17+)
+- sdk/tsconfig.json — TypeScript configuration for SDK
+- sdk/rollup.config.js — Rollup bundler config for ESM, CJS, and UMD builds
+
+**Type Definitions:**
+- sdk/src/types/index.ts — Complete type definitions:
+  - VocabLoopConfig for SDK initialization
+  - Widget configs: MiniReviewConfig, BadgeConfig, HighlightConfig, CardPopupConfig
+  - Event types: VocabLoopEvent, VocabLoopEventData
+  - Data types: VocabWord, VocabStats, WidgetTheme
+
+**Utilities:**
+- sdk/src/utils/api.ts — API client for SDK:
+  - APIClient class with auth, vocabulary CRUD, stats, and review methods
+  - Token management and storage
+  - Request helpers with error handling
+  - initAPIClient/getAPIClient singleton pattern
+
+- sdk/src/utils/events.ts — Event emitter:
+  - Typed event emission and handling
+  - on/off/emit/removeAllListeners methods
+  - Error-safe handler execution
+
+**React Components:**
+- sdk/src/components/MiniReview.tsx — Compact review widget:
+  - Three sizes: small, medium, large
+  - Card flipping with translation reveal
+  - Grade buttons (Again/Hard/Good/Easy)
+  - Progress indicator
+  - Session completion callback
+
+- sdk/src/components/VocabBadge.tsx — Stats badge widget:
+  - Three sizes: icon, compact, full
+  - Displays word count, mastered count, streak
+  - Animated appearance
+  - Customizable theming
+
+- sdk/src/components/WordHighlight.tsx — Inline highlighting:
+  - Three styles: underline, background, bold
+  - Vocabulary matching with word boundaries
+  - Click handler for popup/add actions
+  - Hover effects
+  - Popup card on click
+
+- sdk/src/components/CardPopup.tsx — Modal flashcard:
+  - Flip animation (Space/click to reveal)
+  - Grade buttons for review
+  - Context/example display
+  - Keyboard shortcuts (Escape to close)
+  - showCardPopup() standalone function
+
+- sdk/src/components/index.ts — Component exports
+
+**Main Entry Point:**
+- sdk/src/index.ts — SDK main entry:
+  - VocabLoop.init() for initialization
+  - VocabLoop.destroy() for cleanup
+  - Event methods: on/off
+  - Widget rendering: renderMiniReview, renderBadge, renderHighlight, showCard
+  - Data methods: getStats, getVocabulary, addWord
+  - React component exports for direct usage
+  - UMD global export for script tag usage
+  - Version tracking
+
+**Build Configuration:**
+- Rollup outputs:
+  - dist/index.esm.js — ES modules for bundlers
+  - dist/index.js — CommonJS for Node
+  - dist/vocabloop.umd.js — UMD for script tags
+  - dist/vocabloop.umd.min.js — Minified UMD
+
+**Implementation Notes:**
+- SDK designed for third-party integration
+- API client handles authentication handshake
+- All components use consistent theming
+- Event system allows listening to SDK events
+- UMD build enables CDN script tag usage
+- React components exported for React integrators
+- Peer dependencies: React 17+
+
+**Deferred Items:**
+- Build demo integration site
+- npm publish workflow
+- CDN deployment
+- Documentation site
+
+**Verification:**
+- All 339 tests pass
+- Main app build succeeds
+- TypeScript compilation passes
+- SDK files created correctly
+
+---
