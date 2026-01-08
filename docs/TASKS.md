@@ -656,11 +656,14 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
   - [x] Document pros/cons of each
   - [x] Recommend approach (Capacitor)
 
-- [ ] Set up Capacitor project — `mobile/`
-  - [ ] Initialize Capacitor: `npm install @capacitor/core @capacitor/cli`
-  - [ ] Add iOS and Android platforms
-  - [ ] Configure app icon and splash screen
-  - [ ] Set up native build pipelines
+- [x] Set up Capacitor project — integrated into main project
+  - [x] Initialize Capacitor: `npm install @capacitor/core @capacitor/cli`
+  - [x] Configure capacitor.config.ts with iOS/Android settings
+  - [x] Install essential plugins (splash-screen, status-bar, keyboard, notifications)
+  - [x] Create native.ts utility and useNative hook for platform integration
+  - [x] Set up resources/ directory for app icons and splash screen
+  - [ ] Add iOS and Android platforms (requires Xcode/Android Studio)
+  - [ ] Set up native build pipelines (requires platform SDKs)
 
 - [ ] Implement native features
   - [ ] Push notifications for review reminders

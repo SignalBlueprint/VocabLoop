@@ -533,3 +533,70 @@
 **Note:** Actual Capacitor setup and native features require Xcode/Android Studio and platform SDKs, which are outside the scope of this implementation.
 
 ---
+
+## Moonshot Phase 2: Capacitor Project Setup
+**Completed:** 2026-01-08T22:20:00Z
+**Files Changed:**
+
+**Capacitor Configuration:**
+- capacitor.config.ts — Full Capacitor configuration with:
+  - App ID: com.vocabloop.app
+  - iOS and Android platform settings
+  - Splash screen configuration (emerald background)
+  - Status bar configuration
+  - Keyboard behavior settings
+  - Push and local notification configuration
+
+**Native Integration:**
+- src/utils/native.ts — Platform integration utility with:
+  - Platform detection (isNativePlatform, getPlatform)
+  - Splash screen control (hideSplashScreen)
+  - Status bar styling (setStatusBarStyle)
+  - Keyboard listeners (addKeyboardListeners)
+  - App state listeners (foreground/background)
+  - Back button listener (Android)
+  - Preferences API wrapper
+  - Push notification setup and listeners
+  - Local notification scheduling for review reminders
+  - Daily reminder scheduling
+  - Platform initialization function
+
+- src/hooks/useNative.ts — React hooks for native features:
+  - useNative — Main hook with platform info and notification actions
+  - useBackButton — Android back button handler
+  - useAppState — Track foreground/background state
+  - useKeyboardHeight — Keyboard height for UI adjustment
+
+**Resources:**
+- resources/README.md — Guide for creating app icons and splash screens
+
+**Dependencies Added:**
+- @capacitor/core, @capacitor/cli — Core Capacitor framework
+- @capacitor/splash-screen — Splash screen control
+- @capacitor/status-bar — Status bar styling
+- @capacitor/keyboard — Keyboard events
+- @capacitor/app — App lifecycle events
+- @capacitor/preferences — Cross-platform storage
+- @capacitor/push-notifications — Push notification support
+- @capacitor/local-notifications — Local notification scheduling
+
+**Implementation Notes:**
+- Capacitor integrated into main project (not separate mobile/ directory)
+- Web app can be wrapped with `npx cap add ios` and `npx cap add android`
+- Native utilities gracefully fall back when running in browser
+- Review reminder notifications pre-built and ready to use
+- Status bar automatically matches dark/light mode
+
+**Deferred (requires platform SDKs):**
+- Adding iOS platform (requires Xcode)
+- Adding Android platform (requires Android Studio)
+- Building native binaries
+- Testing on physical devices
+
+**Verification:**
+- TypeScript compilation passes
+- All 339 tests pass
+- Build succeeds (671KB bundle)
+- Capacitor config file created successfully
+
+---
