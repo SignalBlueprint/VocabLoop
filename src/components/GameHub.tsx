@@ -21,6 +21,17 @@ interface GameInfo {
 
 const GAMES: GameInfo[] = [
   {
+    id: 'smart-session',
+    name: 'Smart Session',
+    description: 'Adaptive review mix',
+    icon: '🧠',
+    color: {
+      light: 'from-purple-500 to-indigo-500',
+      dark: 'from-purple-600 to-indigo-600',
+    },
+    featured: true,
+  },
+  {
     id: 'multiplayer-lobby',
     name: 'Multiplayer',
     description: 'Race a friend!',
@@ -131,7 +142,7 @@ export function GameHub({ isDark, onNavigate, hasCards }: GameHubProps) {
 
       {/* Featured Games - Large Cards */}
       {!showAll && (
-        <div className="grid grid-cols-3 gap-2 mb-2">
+        <div className="grid grid-cols-2 gap-2 mb-2">
           {featuredGames.map((game) => (
             <button
               key={game.id}

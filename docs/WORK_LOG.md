@@ -176,3 +176,70 @@
 - Results UI shows winner, scores, and word breakdown
 
 ---
+
+## 2.3 Adaptive Curriculum Engine
+**Completed:** 2026-01-08T17:10:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/CURRICULUM_ALGORITHM.md — Comprehensive algorithm design document covering card selection weights, weak tag criteria, confidence recovery, session state, and insights
+
+**Core Engine:**
+- src/utils/curriculum.ts — Full curriculum engine implementation with:
+  - `identifyWeakTags()` — Tags with success rate < 70% and >= 5 cards
+  - `identifyStrongTags()` — Tags with success rate >= 85% for confidence recovery
+  - `selectNextCard()` — Weighted random card selection with confidence recovery trigger
+  - `calculateMix()` — Session card distribution (60% due, 25% weak tag, 15% new)
+  - `createSessionState()` / `updateSessionState()` — Session state management
+  - `calculateSessionStats()` — Session performance metrics
+  - `analyzeSessionTagPerformance()` — Per-tag success analysis
+  - `generateSessionInsights()` — Actionable insight message generation
+- src/utils/curriculum.test.ts — 33 unit tests covering all curriculum functions
+
+**Types:**
+- src/types/index.ts — Added SessionConfig, SessionMode, ReviewResult types and 'smart-session' to Page type
+
+**UI Components:**
+- src/pages/SmartSession.tsx — Complete Smart Session page with:
+  - Configuration screen: mode selector (Smart Mix, Due Only, Tag Focus), card count slider (10-50)
+  - Tag dropdown for tag-focus mode
+  - Confidence recovery toggle
+  - Same review UI as regular Review page with swipe gestures
+  - Confidence boost indicator when recovery cards are shown
+  - Session progress tracking
+- src/components/SmartSessionSummary.tsx — Session summary component showing:
+  - Cards reviewed, success rate, XP earned
+  - Duration and average response time
+  - Confidence boost usage count
+  - Tag performance breakdown with success rates
+  - Actionable insights
+
+**Tag Weakness Tracking:**
+- src/utils/tagWeakness.ts — Rolling 7-day tag performance tracking:
+  - `updateTagWeakness()` — Track review results per tag per day
+  - `getWeakestTags()` — Get tags with lowest rolling success rate
+  - Trend detection (improving/stable/declining)
+  - localStorage persistence with automatic cleanup
+
+**Navigation:**
+- src/components/GameHub.tsx — Added Smart Session as featured game (first position)
+- src/App.tsx — Added SmartSession import and route
+
+**Implementation Notes:**
+- Default weights: 60% due cards, 25% weak tag cards, 15% new cards
+- Weak tag threshold: success rate < 70% with minimum 5 cards
+- Strong tag threshold: success rate >= 85% with minimum 3 cards
+- Confidence recovery: After 2 consecutive failures, insert easier card from strong tags
+- Session modes: smart (adaptive), due-only (traditional), tag-focus (specific tag)
+- Tag weakness tracking uses 7-day rolling window with trend analysis
+- GameHub now shows 4 featured games in 2x2 grid
+
+**Verification:**
+- All 33 new curriculum tests pass
+- TypeScript type check passes
+- Smart Session accessible from GameHub
+- Configuration screen renders all options
+- Review UI matches standard Review page
+- Session summary shows all metrics and insights
+
+---

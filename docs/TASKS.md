@@ -361,51 +361,51 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Design curriculum algorithm — `docs/CURRICULUM_ALGORITHM.md`
-  - [ ] Document card selection weights: 60% due, 25% weak tags, 15% new
-  - [ ] Define "weak tag" criteria: tags with successRate < 70% and cardCount >= 5
-  - [ ] Specify confidence recovery: if 2 consecutive failures, insert easier card
-  - [ ] Plan session summary insights
+- [x] Design curriculum algorithm — `docs/CURRICULUM_ALGORITHM.md`
+  - [x] Document card selection weights: 60% due, 25% weak tags, 15% new
+  - [x] Define "weak tag" criteria: tags with successRate < 70% and cardCount >= 5
+  - [x] Specify confidence recovery: if 2 consecutive failures, insert easier card
+  - [x] Plan session summary insights
 
-- [ ] Create curriculum engine — `src/utils/curriculum.ts`
-  - [ ] Implement `identifyWeakTags(cards: Card[], reviews: ReviewLog[]): string[]`
-  - [ ] Implement `selectNextCard(config: SessionConfig, recentResults: ReviewResult[]): Card`
-  - [ ] Implement `calculateMix(dueCards: Card[], weakTagCards: Card[], newCards: Card[]): Card[]`
-  - [ ] Track in-session performance for dynamic adjustment
-  - [ ] Add unit tests in `src/utils/curriculum.test.ts`
+- [x] Create curriculum engine — `src/utils/curriculum.ts`
+  - [x] Implement `identifyWeakTags(cards: Card[], reviews: ReviewLog[]): string[]`
+  - [x] Implement `selectNextCard(config: SessionConfig, recentResults: ReviewResult[]): Card`
+  - [x] Implement `calculateMix(dueCards: Card[], weakTagCards: Card[], newCards: Card[]): Card[]`
+  - [x] Track in-session performance for dynamic adjustment
+  - [x] Add unit tests in `src/utils/curriculum.test.ts`
 
-- [ ] Create SessionConfig type — `src/types/index.ts`
-  - [ ] Add interface: `SessionConfig { mode: 'smart' | 'due-only' | 'tag-focus', targetCards: number, tagFocus?: string }`
-  - [ ] Add interface: `ReviewResult { cardId: string, grade: Grade, timeMs: number }`
+- [x] Create SessionConfig type — `src/types/index.ts`
+  - [x] Add interface: `SessionConfig { mode: 'smart' | 'due-only' | 'tag-focus', targetCards: number, tagFocus?: string }`
+  - [x] Add interface: `ReviewResult { cardId: string, grade: Grade, timeMs: number }`
 
-- [ ] Create SmartSession page — `src/pages/SmartSession.tsx`
-  - [ ] Session configuration screen: card count slider (10-50), mode selector
-  - [ ] Use curriculum engine to select cards
-  - [ ] Track performance during session
-  - [ ] Adjust upcoming cards based on results (insert easier if struggling)
-  - [ ] Same review UI as regular Review page
+- [x] Create SmartSession page — `src/pages/SmartSession.tsx`
+  - [x] Session configuration screen: card count slider (10-50), mode selector
+  - [x] Use curriculum engine to select cards
+  - [x] Track performance during session
+  - [x] Adjust upcoming cards based on results (insert easier if struggling)
+  - [x] Same review UI as regular Review page
 
-- [ ] Create session summary — `src/components/SmartSessionSummary.tsx`
-  - [ ] Show cards reviewed, success rate, time spent
-  - [ ] Highlight "Struggled with [tag]" if tag had low success
-  - [ ] Suggest "Tomorrow's session will include more [tag] practice"
-  - [ ] Compare to average session performance
+- [x] Create session summary — `src/components/SmartSessionSummary.tsx`
+  - [x] Show cards reviewed, success rate, time spent
+  - [x] Highlight "Struggled with [tag]" if tag had low success
+  - [x] Suggest "Tomorrow's session will include more [tag] practice"
+  - [x] Compare to average session performance
 
-- [ ] Add Smart Session to navigation — `src/App.tsx`
-  - [ ] Add "Smart Session" button on Home page alongside "Start Review"
-  - [ ] Add 'smart-session' to Page type
-  - [ ] Route to SmartSession component
+- [x] Add Smart Session to navigation — `src/App.tsx`
+  - [x] Add "Smart Session" button on Home page alongside "Start Review" (added to GameHub)
+  - [x] Add 'smart-session' to Page type
+  - [x] Route to SmartSession component
 
-- [ ] Create tag weakness tracking — `src/utils/tagWeakness.ts`
-  - [ ] Implement `updateTagWeakness(tag: string, result: ReviewResult): void`
-  - [ ] Store rolling 7-day success rate per tag in localStorage
-  - [ ] Implement `getWeakestTags(count: number): string[]`
+- [x] Create tag weakness tracking — `src/utils/tagWeakness.ts`
+  - [x] Implement `updateTagWeakness(tag: string, result: ReviewResult): void`
+  - [x] Store rolling 7-day success rate per tag in localStorage
+  - [x] Implement `getWeakestTags(count: number): string[]`
 
-- [ ] Implement confidence recovery logic — `src/utils/curriculum.ts`
-  - [ ] Track consecutive failures in session
-  - [ ] After 2 failures, next card is from a strong tag (successRate > 85%)
-  - [ ] Reset counter after any success
-  - [ ] Log confidence interventions for analysis
+- [x] Implement confidence recovery logic — `src/utils/curriculum.ts`
+  - [x] Track consecutive failures in session
+  - [x] After 2 failures, next card is from a strong tag (successRate > 85%)
+  - [x] Reset counter after any success
+  - [x] Log confidence interventions for analysis
 
 **Acceptance Criteria:**
 - Home page offers "Smart Session" alongside regular review

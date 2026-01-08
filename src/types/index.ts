@@ -67,4 +67,30 @@ export interface Stats {
 }
 
 // App navigation pages
-export type Page = 'home' | 'add' | 'review' | 'library' | 'stats' | 'frequency' | 'verbs' | 'cloze' | 'difficulty' | 'speedround' | 'matching' | 'quiz' | 'typing' | 'custom-study' | 'listening' | 'multiplayer-lobby' | 'multiplayer-game' | 'multiplayer-results';
+export type Page = 'home' | 'add' | 'review' | 'library' | 'stats' | 'frequency' | 'verbs' | 'cloze' | 'difficulty' | 'speedround' | 'matching' | 'quiz' | 'typing' | 'custom-study' | 'listening' | 'multiplayer-lobby' | 'multiplayer-game' | 'multiplayer-results' | 'smart-session';
+
+// Smart Session configuration
+export type SessionMode = 'smart' | 'due-only' | 'tag-focus';
+
+export interface SessionConfig {
+  mode: SessionMode;
+  targetCards: number;        // 10-50 cards per session
+  tagFocus?: string;          // For 'tag-focus' mode only
+
+  // Optional weight overrides (defaults: due=60, weakTag=25, new=15)
+  weights?: {
+    due: number;
+    weakTag: number;
+    new: number;
+  };
+
+  enableConfidenceRecovery?: boolean;  // default: true
+}
+
+// Result of a single card review in a session
+export interface ReviewResult {
+  cardId: string;
+  grade: Grade;
+  timeMs: number;              // Response time in milliseconds
+  wasRecoveryCard?: boolean;   // True if this was a confidence recovery card
+}
