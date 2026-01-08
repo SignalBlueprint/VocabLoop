@@ -105,6 +105,16 @@ const GAMES: GameInfo[] = [
     },
   },
   {
+    id: 'pronunciation',
+    name: 'Pronunciation',
+    description: 'Speak Spanish aloud',
+    icon: '🎤',
+    color: {
+      light: 'from-rose-500 to-pink-500',
+      dark: 'from-rose-600 to-pink-600',
+    },
+  },
+  {
     id: 'verbs',
     name: 'Verb Drill',
     description: '70+ conjugations',

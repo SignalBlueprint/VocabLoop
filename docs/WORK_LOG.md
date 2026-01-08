@@ -340,3 +340,83 @@
 - Chat session UI displays messages and streaming
 
 ---
+
+## 3.2 Pronunciation Challenge Mode (Infrastructure)
+**Completed:** 2026-01-08T18:35:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/SPEECH_RESEARCH.md — Comprehensive speech recognition research comparing Web Speech API, OpenAI Whisper, Azure Speech Services, and local Whisper with recommendations
+
+**Audio Recording:**
+- src/hooks/useAudioRecorder.ts — Audio recording hook with:
+  - `startRecording()` / `stopRecording()` / `cancelRecording()` methods
+  - Real-time audio level monitoring (0-1 scale)
+  - Waveform data extraction for visualization
+  - Duration tracking
+  - Error handling for permission denied, no device, not supported
+  - MediaRecorder with WebM/MP4 output
+
+**Speech Recognition:**
+- src/utils/speechRecognition.ts — Speech recognition service with:
+  - `recognizeSpeech()` — Single-shot recognition
+  - `createSpeechSession()` — Reusable recognition session
+  - `comparePronunciation()` — Compare expected vs transcribed text
+  - `calculateSimilarity()` — Levenshtein distance-based similarity
+  - `normalizeSpanish()` — Accent and punctuation normalization
+  - `speakSpanish()` — Text-to-speech for native pronunciation
+  - Spanish dialect support (es-ES, es-MX, es-AR, es-CO)
+
+**Visualization Components:**
+- src/components/WaveformVisualizer.tsx:
+  - `WaveformVisualizer` — Canvas-based waveform display
+  - `AudioLevelIndicator` — Simple level bar
+  - `WaveformBars` — Animated vertical bars
+  - `RecordingIndicator` — Combined duration + level display
+
+**Pronunciation UI:**
+- src/components/PronunciationCard.tsx — Single word practice card with:
+  - Listen button (native TTS pronunciation)
+  - Record button with real-time waveform
+  - Result display (pass/fail with similarity percentage)
+  - Try again / next word controls
+  - Error handling for unsupported browsers
+
+- src/pages/Pronunciation.tsx — Full practice session:
+  - Setup screen with word count slider (5-20)
+  - Progress bar during session
+  - Results summary with per-word breakdown
+  - Score calculation and encouragement messages
+  - Browser support detection with fallback message
+
+**Navigation:**
+- src/types/index.ts — Added 'pronunciation' to Page type
+- src/components/GameHub.tsx — Added Pronunciation to games list
+- src/App.tsx — Added Pronunciation import and route
+
+**Implementation Notes:**
+- Uses Web Speech API (free, simple) as recommended in research
+- Chrome/Edge only (Firefox not supported)
+- Fuzzy matching with Levenshtein distance (70% threshold)
+- Real-time waveform visualization during recording
+- Audio level monitoring for visual feedback
+- Spanish dialect configurable (defaults to es-ES)
+- Session results tracked per word (attempts, similarity)
+
+**Deferred Items:**
+- Whisper API integration (premium accuracy)
+- Azure Pronunciation Assessment (phoneme feedback)
+- Pronunciation history tracking
+- Detailed phoneme-level feedback
+- Per-word pronunciation scores in card history
+
+**Verification:**
+- All 339 tests pass (no new tests for browser APIs)
+- TypeScript type check passes
+- Build compiles successfully (671KB bundle)
+- Pronunciation accessible from GameHub
+- Setup screen shows word count selection
+- Browser support detection works
+- Recording UI shows waveform and level
+
+---

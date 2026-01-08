@@ -524,51 +524,51 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Research speech recognition options — `docs/SPEECH_RESEARCH.md`
-  - [ ] Test Web Speech API for Spanish recognition accuracy
-  - [ ] Evaluate Whisper API (accuracy, latency, cost)
-  - [ ] Evaluate Azure Speech Services (pronunciation assessment feature)
-  - [ ] Document browser compatibility
-  - [ ] Recommend approach
+- [x] Research speech recognition options — `docs/SPEECH_RESEARCH.md`
+  - [x] Test Web Speech API for Spanish recognition accuracy
+  - [x] Evaluate Whisper API (accuracy, latency, cost)
+  - [x] Evaluate Azure Speech Services (pronunciation assessment feature)
+  - [x] Document browser compatibility
+  - [x] Recommend approach
 
-- [ ] Create audio recording hook — `src/hooks/useAudioRecorder.ts`
-  - [ ] Implement `startRecording(): Promise<void>` requesting microphone permission
-  - [ ] Implement `stopRecording(): Promise<Blob>`
-  - [ ] Implement `getWaveformData(): Float32Array` for visualization
-  - [ ] Handle permission denied gracefully
-  - [ ] Clean up MediaStream on unmount
+- [x] Create audio recording hook — `src/hooks/useAudioRecorder.ts`
+  - [x] Implement `startRecording(): Promise<void>` requesting microphone permission
+  - [x] Implement `stopRecording(): Promise<Blob>`
+  - [x] Implement `getWaveformData(): Float32Array` for visualization
+  - [x] Handle permission denied gracefully
+  - [x] Clean up MediaStream on unmount
 
-- [ ] Create speech recognition service — `src/utils/speechRecognition.ts`
-  - [ ] Implement `transcribeAudio(blob: Blob): Promise<string>` using Web Speech API
-  - [ ] Implement `comparePronunciation(expected: string, actual: string): PronunciationResult`
-  - [ ] PronunciationResult: { match: boolean, confidence: number, issues?: string[] }
-  - [ ] Handle Spanish-specific recognition settings
+- [x] Create speech recognition service — `src/utils/speechRecognition.ts`
+  - [x] Implement `transcribeAudio(blob: Blob): Promise<string>` using Web Speech API
+  - [x] Implement `comparePronunciation(expected: string, actual: string): PronunciationResult`
+  - [x] PronunciationResult: { match: boolean, confidence: number, issues?: string[] }
+  - [x] Handle Spanish-specific recognition settings
 
-- [ ] Create WaveformVisualizer component — `src/components/WaveformVisualizer.tsx`
-  - [ ] Accept props: `audioData: Float32Array`, `color: string`
-  - [ ] Render waveform using Canvas or SVG
-  - [ ] Animate during recording
-  - [ ] Support playback progress indicator
+- [x] Create WaveformVisualizer component — `src/components/WaveformVisualizer.tsx`
+  - [x] Accept props: `audioData: Float32Array`, `color: string`
+  - [x] Render waveform using Canvas or SVG
+  - [x] Animate during recording
+  - [ ] Support playback progress indicator (deferred)
 
-- [ ] Create PronunciationCard component — `src/components/PronunciationCard.tsx`
-  - [ ] Display Spanish word with "Listen" button (uses existing TTS)
-  - [ ] "Record" button to capture user pronunciation
-  - [ ] Side-by-side waveform comparison (native vs user)
-  - [ ] Show result: checkmark for match, X for mismatch
-  - [ ] "Try Again" button
+- [x] Create PronunciationCard component — `src/components/PronunciationCard.tsx`
+  - [x] Display Spanish word with "Listen" button (uses existing TTS)
+  - [x] "Record" button to capture user pronunciation
+  - [ ] Side-by-side waveform comparison (native vs user) (deferred)
+  - [x] Show result: checkmark for match, X for mismatch
+  - [x] "Try Again" button
 
-- [ ] Create PronunciationPage — `src/pages/Pronunciation.tsx`
-  - [ ] Session of 10 words from user's deck
-  - [ ] Progress indicator
-  - [ ] Score tracking (X/10 correct)
-  - [ ] Session summary with problem words
+- [x] Create PronunciationPage — `src/pages/Pronunciation.tsx`
+  - [x] Session of 10 words from user's deck
+  - [x] Progress indicator
+  - [x] Score tracking (X/10 correct)
+  - [x] Session summary with problem words
 
-- [ ] Add pronunciation to navigation — `src/App.tsx`
-  - [ ] Add "Pronunciation" to game modes or main nav
-  - [ ] Add 'pronunciation' to Page type
-  - [ ] Show microphone icon
+- [x] Add pronunciation to navigation — `src/App.tsx`
+  - [x] Add "Pronunciation" to game modes or main nav (GameHub)
+  - [x] Add 'pronunciation' to Page type
+  - [x] Show microphone icon
 
-- [ ] Create pronunciation history — `src/utils/pronunciationHistory.ts`
+- [ ] Create pronunciation history — `src/utils/pronunciationHistory.ts` (deferred)
   - [ ] Store attempts: cardId, timestamp, result
   - [ ] Track improvement over time per word
   - [ ] Identify persistent problem words

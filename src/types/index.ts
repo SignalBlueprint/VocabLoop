@@ -67,7 +67,7 @@ export interface Stats {
 }
 
 // App navigation pages
-export type Page = 'home' | 'add' | 'review' | 'library' | 'stats' | 'frequency' | 'verbs' | 'cloze' | 'difficulty' | 'speedround' | 'matching' | 'quiz' | 'typing' | 'custom-study' | 'listening' | 'multiplayer-lobby' | 'multiplayer-game' | 'multiplayer-results' | 'smart-session' | 'conversation';
+export type Page = 'home' | 'add' | 'review' | 'library' | 'stats' | 'frequency' | 'verbs' | 'cloze' | 'difficulty' | 'speedround' | 'matching' | 'quiz' | 'typing' | 'custom-study' | 'listening' | 'multiplayer-lobby' | 'multiplayer-game' | 'multiplayer-results' | 'smart-session' | 'conversation' | 'pronunciation';
 
 // Smart Session configuration
 export type SessionMode = 'smart' | 'due-only' | 'tag-focus';
