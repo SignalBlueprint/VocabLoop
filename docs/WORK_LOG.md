@@ -600,3 +600,51 @@
 - Capacitor config file created successfully
 
 ---
+
+## Moonshot Phase 3: Widget SDK Design
+**Completed:** 2026-01-08T22:30:00Z
+**Files Changed:**
+
+- docs/WIDGET_SDK.md — Comprehensive SDK design document
+
+**Widget Types Defined:**
+1. **Inline Word Highlight** — Highlight Spanish words on any webpage by knowledge level
+2. **Popup Card** — Modal flashcard with translation, audio, and grading
+3. **Mini Review Widget** — Compact review session (small/medium/large sizes)
+4. **Vocabulary Badge** — Display user stats as embeddable badge
+
+**JavaScript Embed API:**
+- Initialization with API key or anonymous mode
+- Core methods: getVocabulary, isKnown, addWord, recordReview, getStats
+- Event system: ready, authenticated, word-added, review-complete, error
+- Widget embedding: highlight, showCard, embed, badge
+
+**OAuth 2.0 Flow:**
+- Standard authorization code flow
+- Defined scopes: vocabulary:read/write, reviews:read/write, stats:read, profile:read
+- Token refresh support
+
+**Pricing Tiers:**
+- Free: 100 req/min, read-only, attribution required
+- Developer ($29/mo): 1,000 req/min, full features, custom theming
+- Business ($199/mo): 10,000 req/min, white-label, analytics, SLA
+- Enterprise (custom): Unlimited, on-premise option
+
+**Technical Architecture:**
+- CDN distribution via CloudFlare
+- API endpoints for vocabulary and reviews
+- Iframe sandbox with postMessage communication
+- Security: domain-restricted API keys, CSP headers, XSS prevention
+
+**Example Integrations:**
+- News website sidebar widget
+- E-book reader with word highlighting
+- Video subtitle overlay during pauses
+
+**Implementation Roadmap:**
+1. Core Infrastructure (4-6 weeks)
+2. Widgets (4-6 weeks)
+3. Partner Integrations (ongoing)
+4. Analytics & Growth (ongoing)
+
+---

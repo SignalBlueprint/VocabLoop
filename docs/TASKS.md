@@ -702,11 +702,12 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Design embeddable widget SDK — `docs/WIDGET_SDK.md`
-  - [ ] Define widget types: inline word highlight, popup card, mini-review
-  - [ ] Design JavaScript embed API
-  - [ ] Plan OAuth flow for third-party apps
-  - [ ] Specify rate limits and pricing tiers
+- [x] Design embeddable widget SDK — `docs/WIDGET_SDK.md`
+  - [x] Define widget types: inline word highlight, popup card, mini-review, vocabulary badge
+  - [x] Design JavaScript embed API with init, methods, and events
+  - [x] Plan OAuth flow for third-party apps with scopes
+  - [x] Specify rate limits and pricing tiers (Free, Developer, Business, Enterprise)
+  - [x] Document security considerations and example integrations
 
 - [ ] Build widget SDK — `sdk/`
   - [ ] Create embeddable JavaScript bundle
