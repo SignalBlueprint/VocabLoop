@@ -441,56 +441,56 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Research LLM integration options — `docs/LLM_RESEARCH.md`
-  - [ ] Evaluate OpenAI GPT-4o-mini (cost, latency, quality)
-  - [ ] Evaluate Anthropic Claude Haiku (cost, latency, quality)
-  - [ ] Evaluate local models (Ollama + Llama) for privacy-first option
-  - [ ] Document API pricing and rate limits
-  - [ ] Recommend approach with rationale
+- [x] Research LLM integration options — `docs/LLM_RESEARCH.md`
+  - [x] Evaluate OpenAI GPT-4o-mini (cost, latency, quality)
+  - [x] Evaluate Anthropic Claude Haiku (cost, latency, quality)
+  - [x] Evaluate local models (Ollama + Llama) for privacy-first option
+  - [x] Document API pricing and rate limits
+  - [x] Recommend approach with rationale
 
-- [ ] Design conversation system prompt — `src/prompts/conversation.ts`
-  - [ ] Create character persona (friendly neighbor)
-  - [ ] Include vocabulary constraints: "Only use these Spanish words: [list]"
-  - [ ] Specify behavior: introduce one new word per exchange, stay simple
-  - [ ] Add safety guidelines
-  - [ ] Export as configurable template
+- [x] Design conversation system prompt — `src/prompts/conversation.ts`
+  - [x] Create character persona (friendly neighbor)
+  - [x] Include vocabulary constraints: "Only use these Spanish words: [list]"
+  - [x] Specify behavior: introduce one new word per exchange, stay simple
+  - [x] Add safety guidelines
+  - [x] Export as configurable template
 
-- [ ] Create LLM client abstraction — `src/lib/llm.ts`
-  - [ ] Define interface: `sendMessage(messages: Message[], config: LLMConfig): Promise<string>`
-  - [ ] Implement OpenAI adapter
-  - [ ] Implement Anthropic adapter
-  - [ ] Support streaming responses
-  - [ ] Handle rate limits and errors gracefully
+- [x] Create LLM client abstraction — `src/lib/llm.ts`
+  - [x] Define interface: `sendMessage(messages: Message[], config: LLMConfig): Promise<string>`
+  - [x] Implement OpenAI adapter
+  - [x] Implement Anthropic adapter
+  - [x] Support streaming responses
+  - [x] Handle rate limits and errors gracefully
 
-- [ ] Create vocabulary extraction utility — `src/utils/vocabExtract.ts`
-  - [ ] Implement `getKnownVocabulary(cards: Card[]): string[]` filtering cards with intervalDays >= 7
-  - [ ] Implement `formatVocabForPrompt(words: string[]): string`
-  - [ ] Implement `detectNewWord(response: string, knownWords: string[]): string | null`
+- [x] Create vocabulary extraction utility — `src/utils/vocabExtract.ts`
+  - [x] Implement `getKnownVocabulary(cards: Card[]): string[]` filtering cards with intervalDays >= 7
+  - [x] Implement `formatVocabForPrompt(words: string[]): string`
+  - [x] Implement `detectNewWord(response: string, knownWords: string[]): string | null`
 
-- [ ] Create ChatSession component — `src/components/ChatSession.tsx`
-  - [ ] Chat bubble UI with user messages right, AI messages left
-  - [ ] Text input with send button
-  - [ ] Typing indicator during AI response
-  - [ ] Show detected new word with definition when introduced
-  - [ ] Limit to 5 turns in POC
+- [x] Create ChatSession component — `src/components/ChatSession.tsx`
+  - [x] Chat bubble UI with user messages right, AI messages left
+  - [x] Text input with send button
+  - [x] Typing indicator during AI response
+  - [x] Show detected new word with definition when introduced
+  - [x] Limit to 5 turns in POC
 
-- [ ] Create ConversationPage — `src/pages/Conversation.tsx`
-  - [ ] Character selection (single character for POC)
-  - [ ] Display character avatar and name
-  - [ ] Embed ChatSession component
-  - [ ] "End Conversation" button
-  - [ ] Vocabulary boosts: cards used correctly in conversation get interval bonus
+- [x] Create ConversationPage — `src/pages/Conversation.tsx`
+  - [x] Character selection (single character for POC)
+  - [x] Display character avatar and name
+  - [x] Embed ChatSession component
+  - [x] "End Conversation" button
+  - [ ] Vocabulary boosts: cards used correctly in conversation get interval bonus (deferred)
 
-- [ ] Implement vocabulary tracking — `src/utils/conversationReview.ts`
-  - [ ] Track words used correctly in conversation
-  - [ ] Apply interval boost to those cards (e.g., +1 day)
-  - [ ] Track words user stumbled on for extra review
-  - [ ] Log conversation as special review type
+- [x] Implement vocabulary tracking — `src/utils/conversationReview.ts`
+  - [x] Track words used correctly in conversation
+  - [ ] Apply interval boost to those cards (e.g., +1 day) (deferred)
+  - [x] Track words user stumbled on for extra review
+  - [x] Log conversation as special review type
 
-- [ ] Add conversation to navigation — `src/App.tsx`
-  - [ ] Add "Chat Practice" to main navigation
-  - [ ] Add 'conversation' to Page type
-  - [ ] Show character with speech bubble on Home page as entry point
+- [x] Add conversation to navigation — `src/App.tsx`
+  - [x] Add "Chat Practice" to main navigation (added to GameHub)
+  - [x] Add 'conversation' to Page type
+  - [ ] Show character with speech bubble on Home page as entry point (deferred)
 
 **Acceptance Criteria:**
 - Can start conversation with AI character
