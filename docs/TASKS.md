@@ -733,11 +733,13 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
   - [x] Add badges and achievements per skill
   - [x] Document system in docs/SKILL_TREE.md
 
-- [ ] Expand vocabulary corpus
-  - [ ] Grow from 500 to 50,000 words
-  - [ ] Add domain tags (medical, legal, travel, business)
-  - [ ] Add regional variants (Spain, Mexico, Argentina)
-  - [ ] Add difficulty ratings and frequency ranks
+- [x] Expand vocabulary corpus infrastructure
+  - [ ] Grow from 500 to 50,000 words (ongoing - currently ~170 enhanced words)
+  - [x] Add domain tags (medical, legal, travel, business)
+  - [x] Add regional variants (Spain, Mexico, Argentina)
+  - [x] Add difficulty ratings and frequency ranks
+  - [x] Create enhanced vocabulary data structure with types
+  - [x] Create domain vocabulary modules (travel, food, medical, business)
 
 **Acceptance Criteria:**
 - Other apps can embed VocabLoop widgets

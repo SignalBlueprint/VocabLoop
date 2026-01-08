@@ -806,3 +806,87 @@
 - SDK files created correctly
 
 ---
+
+## Moonshot Phase 3: Vocabulary Corpus Infrastructure
+**Completed:** 2026-01-08T23:58:00Z
+**Files Changed:**
+
+**Type Definitions:**
+- src/data/vocabulary/types.ts — Complete vocabulary type system:
+  - Domain enum (15 domains: general, travel, food, business, medical, legal, technology, etc.)
+  - Region enum (6 regions: neutral, spain, mexico, argentina, colombia, caribbean)
+  - Difficulty enum (CEFR levels: A1, A2, B1, B2, C1, C2)
+  - PartOfSpeech enum (10 types: noun, verb, adjective, etc.)
+  - VocabularyWord interface with 20+ fields
+  - DomainWordSet and VocabularyCorpus interfaces
+  - DIFFICULTY_DESCRIPTIONS, DOMAIN_INFO, REGION_INFO constants
+
+**Domain Vocabulary Modules:**
+- src/data/vocabulary/domains/travel.ts — 25 travel words (A1-B2)
+  - Airport, hotel, transport, booking, customs vocabulary
+  - Regional variants (billete/boleto/pasaje, maleta/petaca/valija)
+
+- src/data/vocabulary/domains/food.ts — 30 food & dining words (A1-B2)
+  - Meals, ingredients, cooking, restaurant vocabulary
+  - Regional variants (camarero/mesero/mozo)
+
+- src/data/vocabulary/domains/medical.ts — 35 medical words (A1-C1)
+  - Symptoms, treatments, hospital, specialists vocabulary
+  - Regional variants (resfriado/gripa/constipado)
+
+- src/data/vocabulary/domains/business.ts — 35 business words (A2-C1)
+  - Work, finance, commerce, corporate vocabulary
+
+- src/data/vocabulary/domains/index.ts — Domain exports and utilities
+
+**Main Vocabulary Index:**
+- src/data/vocabulary/index.ts — Corpus management:
+  - VOCABULARY_CORPUS constant
+  - filterByDifficulty(), filterByDomain(), filterByRegion()
+  - sortByFrequency(), getWordsUpToLevel()
+  - searchVocabulary(), getVocabularyStats()
+  - toFrequencyListFormat() for backwards compatibility
+  - getRandomWords() with filtering options
+
+**Enhanced Word Features:**
+- Frequency rankings (1-10000 scale)
+- CEFR difficulty levels (A1-C2)
+- Multiple English translations
+- Example sentences with translations
+- Regional variants with notes
+- Part of speech
+- Gender for nouns
+- Irregular flag for verbs
+- Collocations
+- Related words
+- IPA pronunciation field
+- Audio file reference
+
+**Word Counts by Domain:**
+- Travel: 25 words
+- Food: 30 words
+- Medical: 35 words
+- Business: 35 words
+- Total: ~125 enhanced words
+
+**Implementation Notes:**
+- Infrastructure ready for expanding to 50,000 words
+- Each word has comprehensive metadata for advanced features
+- Regional variants track Spain, Mexico, Argentina, Colombia, Caribbean differences
+- Backwards compatible with existing frequency.json format via toFrequencyListFormat()
+- Filtering utilities enable Smart Session integration
+
+**Deferred:**
+- Expanding corpus to 50,000 words (data collection ongoing)
+- Additional domains (legal, technology, academic, sports, arts, nature, family, emotions, time, numbers)
+- IPA pronunciation data
+- Audio file generation
+- Integration with existing frequency.json
+
+**Verification:**
+- All 339 tests pass
+- TypeScript compilation passes
+- Build succeeds (671KB bundle)
+- Vocabulary module exports correctly
+
+---
