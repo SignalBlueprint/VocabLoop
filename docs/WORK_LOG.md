@@ -505,3 +505,31 @@
 - Ready for developer mode testing in Chrome
 
 ---
+
+## Moonshot Phase 2: Mobile Framework Research
+**Completed:** 2026-01-08T19:15:00Z
+**Files Changed:**
+
+- docs/MOBILE_RESEARCH.md — Comprehensive mobile framework evaluation
+
+**Summary:**
+- Compared React Native, Capacitor, and PWA-only approaches
+- Evaluated code sharing potential, native feature access, and development effort
+- Created feature comparison matrix
+
+**Recommendation:** Capacitor
+- 95%+ code sharing with existing React app
+- 40-60 hours estimated effort (vs 80-120 for React Native)
+- Adequate performance for flashcard app
+- Native widgets still require platform-specific code (unavoidable)
+
+**Implementation Plan:**
+1. Phase 1: Basic app wrapping (10-15 hours)
+2. Phase 2: Push notifications (8-12 hours)
+3. Phase 3: Background sync (5-8 hours)
+4. Phase 4: Native widgets (15-20 hours)
+5. Phase 5: App store prep (5-10 hours)
+
+**Note:** Actual Capacitor setup and native features require Xcode/Android Studio and platform SDKs, which are outside the scope of this implementation.
+
+---

@@ -650,11 +650,11 @@ This task list implements the VocabLoop vision: transforming a solid Spanish voc
 
 **Tasks:**
 
-- [ ] Evaluate mobile framework — `docs/MOBILE_RESEARCH.md`
-  - [ ] Compare React Native vs Capacitor vs PWA-only approach
-  - [ ] Consider code sharing with existing React codebase
-  - [ ] Document pros/cons of each
-  - [ ] Recommend approach
+- [x] Evaluate mobile framework — `docs/MOBILE_RESEARCH.md`
+  - [x] Compare React Native vs Capacitor vs PWA-only approach
+  - [x] Consider code sharing with existing React codebase
+  - [x] Document pros/cons of each
+  - [x] Recommend approach (Capacitor)
 
 - [ ] Set up Capacitor project — `mobile/`
   - [ ] Initialize Capacitor: `npm install @capacitor/core @capacitor/cli`
