@@ -2,7 +2,9 @@
 repo: VocabLoop
 source: VISION.md
 generated: 2026-01-06
-status: draft
+status: in-progress
+progress: 88%
+last_synced: 2026-01-09
 ---
 
 # VocabLoop Task Backlog

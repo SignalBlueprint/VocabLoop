@@ -15,7 +15,25 @@ last_verified: 2026-01-06
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- SB:SECTION:STATUS -->
-**Status:** Fully functional PWA with 200 passing tests. Main risk: Browser data loss without backup (no cloud sync).
+## Status
+
+```
+[█████████████████░░░] 88% complete
+```
+
+**Current Focus:** Horizon 3 (Blue Sky) & Moonshot
+**Last Updated:** 2026-01-09
+
+| Section | Progress | Tasks |
+|---------|----------|-------|
+| Horizon 1 | `██████████` 100% | 64/64 |
+| Horizon 2 | `█████████░` 97% | 138/143 |
+| Horizon 3 | `████████░░` 89% | 75/84 |
+| Moonshot  | `██████░░░░` 66% | 63/95 |
+
+See [docs/PROGRESS.md](docs/PROGRESS.md) for full details.
+
+**Note:** Fully functional PWA with 339+ passing tests. Cloud sync now available!
 <!-- SB:SECTION:STATUS:END -->
 
 **Master Spanish vocabulary with science-backed spaced repetition, engaging mini-games, and comprehensive progress tracking.**
