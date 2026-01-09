@@ -21,6 +21,28 @@ interface GameInfo {
 
 const GAMES: GameInfo[] = [
   {
+    id: 'smart-session',
+    name: 'Smart Session',
+    description: 'Adaptive review mix',
+    icon: '🧠',
+    color: {
+      light: 'from-purple-500 to-indigo-500',
+      dark: 'from-purple-600 to-indigo-600',
+    },
+    featured: true,
+  },
+  {
+    id: 'conversation',
+    name: 'Conversation',
+    description: 'Chat with AI in Spanish',
+    icon: '💬',
+    color: {
+      light: 'from-blue-500 to-cyan-500',
+      dark: 'from-blue-600 to-cyan-600',
+    },
+    featured: true,
+  },
+  {
     id: 'multiplayer-lobby',
     name: 'Multiplayer',
     description: 'Race a friend!',
@@ -51,7 +73,6 @@ const GAMES: GameInfo[] = [
       light: 'from-pink-500 to-rose-500',
       dark: 'from-pink-600 to-rose-600',
     },
-    featured: true,
   },
   {
     id: 'quiz',
@@ -81,6 +102,16 @@ const GAMES: GameInfo[] = [
     color: {
       light: 'from-violet-500 to-purple-500',
       dark: 'from-violet-600 to-purple-600',
+    },
+  },
+  {
+    id: 'pronunciation',
+    name: 'Pronunciation',
+    description: 'Speak Spanish aloud',
+    icon: '🎤',
+    color: {
+      light: 'from-rose-500 to-pink-500',
+      dark: 'from-rose-600 to-pink-600',
     },
   },
   {
@@ -131,7 +162,7 @@ export function GameHub({ isDark, onNavigate, hasCards }: GameHubProps) {
 
       {/* Featured Games - Large Cards */}
       {!showAll && (
-        <div className="grid grid-cols-3 gap-2 mb-2">
+        <div className="grid grid-cols-2 gap-2 mb-2">
           {featuredGames.map((game) => (
             <button
               key={game.id}

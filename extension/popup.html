@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VocabLoop</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="logo">
+        <img src="icons/icon48.png" alt="VocabLoop" width="24" height="24">
+        <span>VocabLoop</span>
+      </div>
+      <button id="settingsBtn" class="icon-btn" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="stat-card mastered">
+        <span class="stat-value" id="masteredCount">0</span>
+        <span class="stat-label">Mastered</span>
+      </div>
+      <div class="stat-card learning">
+        <span class="stat-value" id="learningCount">0</span>
+        <span class="stat-label">Learning</span>
+      </div>
+    </section>
+
+    <!-- Sync Status -->
+    <section class="sync-section">
+      <div class="sync-status" id="syncStatus">
+        <span class="sync-icon">⟳</span>
+        <span class="sync-text">Not synced</span>
+      </div>
+      <button id="syncBtn" class="sync-btn">Sync Now</button>
+    </section>
+
+    <!-- Toggle Section -->
+    <section class="toggle-section">
+      <label class="toggle-row">
+        <span>Highlighting</span>
+        <div class="toggle-switch">
+          <input type="checkbox" id="highlightToggle" checked>
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+      <label class="toggle-row">
+        <span>Show Translations</span>
+        <div class="toggle-switch">
+          <input type="checkbox" id="translationToggle" checked>
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+    </section>
+
+    <!-- Connection Status -->
+    <section class="connection-section" id="connectionSection">
+      <div class="not-connected" id="notConnected">
+        <p>Connect to your VocabLoop account to sync vocabulary across devices.</p>
+        <button id="connectBtn" class="primary-btn">Connect Account</button>
+        <p class="alt-text">or</p>
+        <button id="importBtn" class="secondary-btn">Import from App</button>
+      </div>
+      <div class="connected" id="connected" style="display: none;">
+        <p class="connected-text">Connected to VocabLoop</p>
+        <button id="disconnectBtn" class="text-btn">Disconnect</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <a href="https://vocabloop.app" target="_blank" rel="noopener">Open VocabLoop App →</a>
+    </footer>
+  </div>
+
+  <!-- Settings Panel (hidden by default) -->
+  <div class="settings-panel" id="settingsPanel" style="display: none;">
+    <header class="popup-header">
+      <button id="backBtn" class="icon-btn" title="Back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <span>Settings</span>
+      <div style="width: 24px;"></div>
+    </header>
+
+    <section class="settings-content">
+      <div class="setting-group">
+        <label for="apiUrl">VocabLoop API URL</label>
+        <input type="url" id="apiUrl" placeholder="https://api.vocabloop.app">
+      </div>
+      <div class="setting-group">
+        <label for="authToken">Auth Token</label>
+        <input type="password" id="authToken" placeholder="Your authentication token">
+      </div>
+      <button id="saveSettingsBtn" class="primary-btn">Save Settings</button>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

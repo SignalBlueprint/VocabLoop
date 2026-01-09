@@ -1,0 +1,183 @@
+/**
+ * VocabLoop Extension Content Styles
+ *
+ * Styles for vocabulary highlighting on webpages
+ */
+
+/* Base highlight styles */
+.vocabloop-highlight {
+  border-radius: 2px;
+  padding: 0 2px;
+  margin: 0 -2px;
+  transition: background-color 0.2s ease;
+}
+
+/* Mastered words - green (interval >= 21 days) */
+.vocabloop-mastered {
+  background-color: rgba(34, 197, 94, 0.3);
+  border-bottom: 2px solid rgba(34, 197, 94, 0.6);
+}
+
+.vocabloop-mastered:hover {
+  background-color: rgba(34, 197, 94, 0.5);
+}
+
+/* Learning words - yellow (interval 1-20 days) */
+.vocabloop-learning {
+  background-color: rgba(234, 179, 8, 0.3);
+  border-bottom: 2px solid rgba(234, 179, 8, 0.6);
+}
+
+.vocabloop-learning:hover {
+  background-color: rgba(234, 179, 8, 0.5);
+}
+
+/* Unknown words - underlined (detected Spanish, not in deck) */
+.vocabloop-unknown {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: rgba(107, 114, 128, 0.6);
+  cursor: pointer;
+}
+
+.vocabloop-unknown:hover {
+  text-decoration-style: solid;
+  background-color: rgba(107, 114, 128, 0.1);
+}
+
+/* Tooltip styles (translation on hover) */
+.vocabloop-highlight[data-vocabloop-english] {
+  position: relative;
+}
+
+.vocabloop-highlight[data-vocabloop-english]:hover::after {
+  content: attr(data-vocabloop-english);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: #1f2937;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10000;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vocabloop-highlight[data-vocabloop-english]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  border: 6px solid transparent;
+  border-top-color: #1f2937;
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* Add word popup */
+.vocabloop-add-popup {
+  position: fixed;
+  z-index: 100000;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  padding: 12px;
+  min-width: 250px;
+  max-width: 350px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.vocabloop-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.vocabloop-popup-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0;
+  line-height: 1;
+}
+
+.vocabloop-popup-close:hover {
+  color: #1f2937;
+}
+
+.vocabloop-popup-context {
+  background: #f3f4f6;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.4;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.vocabloop-popup-add {
+  width: 100%;
+  padding: 8px 12px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.vocabloop-popup-add:hover {
+  background: #059669;
+}
+
+.vocabloop-popup-success {
+  text-align: center;
+  padding: 12px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* Dark mode support (respects prefers-color-scheme) */
+@media (prefers-color-scheme: dark) {
+  .vocabloop-add-popup {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+
+  .vocabloop-popup-close {
+    color: #9ca3af;
+  }
+
+  .vocabloop-popup-close:hover {
+    color: #f9fafb;
+  }
+
+  .vocabloop-popup-context {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .vocabloop-highlight[data-vocabloop-english]:hover::after {
+    background-color: #f9fafb;
+    color: #1f2937;
+  }
+
+  .vocabloop-highlight[data-vocabloop-english]:hover::before {
+    border-top-color: #f9fafb;
+  }
+}

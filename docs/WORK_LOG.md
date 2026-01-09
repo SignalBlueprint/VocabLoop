@@ -176,3 +176,717 @@
 - Results UI shows winner, scores, and word breakdown
 
 ---
+
+## 2.3 Adaptive Curriculum Engine
+**Completed:** 2026-01-08T17:10:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/CURRICULUM_ALGORITHM.md — Comprehensive algorithm design document covering card selection weights, weak tag criteria, confidence recovery, session state, and insights
+
+**Core Engine:**
+- src/utils/curriculum.ts — Full curriculum engine implementation with:
+  - `identifyWeakTags()` — Tags with success rate < 70% and >= 5 cards
+  - `identifyStrongTags()` — Tags with success rate >= 85% for confidence recovery
+  - `selectNextCard()` — Weighted random card selection with confidence recovery trigger
+  - `calculateMix()` — Session card distribution (60% due, 25% weak tag, 15% new)
+  - `createSessionState()` / `updateSessionState()` — Session state management
+  - `calculateSessionStats()` — Session performance metrics
+  - `analyzeSessionTagPerformance()` — Per-tag success analysis
+  - `generateSessionInsights()` — Actionable insight message generation
+- src/utils/curriculum.test.ts — 33 unit tests covering all curriculum functions
+
+**Types:**
+- src/types/index.ts — Added SessionConfig, SessionMode, ReviewResult types and 'smart-session' to Page type
+
+**UI Components:**
+- src/pages/SmartSession.tsx — Complete Smart Session page with:
+  - Configuration screen: mode selector (Smart Mix, Due Only, Tag Focus), card count slider (10-50)
+  - Tag dropdown for tag-focus mode
+  - Confidence recovery toggle
+  - Same review UI as regular Review page with swipe gestures
+  - Confidence boost indicator when recovery cards are shown
+  - Session progress tracking
+- src/components/SmartSessionSummary.tsx — Session summary component showing:
+  - Cards reviewed, success rate, XP earned
+  - Duration and average response time
+  - Confidence boost usage count
+  - Tag performance breakdown with success rates
+  - Actionable insights
+
+**Tag Weakness Tracking:**
+- src/utils/tagWeakness.ts — Rolling 7-day tag performance tracking:
+  - `updateTagWeakness()` — Track review results per tag per day
+  - `getWeakestTags()` — Get tags with lowest rolling success rate
+  - Trend detection (improving/stable/declining)
+  - localStorage persistence with automatic cleanup
+
+**Navigation:**
+- src/components/GameHub.tsx — Added Smart Session as featured game (first position)
+- src/App.tsx — Added SmartSession import and route
+
+**Implementation Notes:**
+- Default weights: 60% due cards, 25% weak tag cards, 15% new cards
+- Weak tag threshold: success rate < 70% with minimum 5 cards
+- Strong tag threshold: success rate >= 85% with minimum 3 cards
+- Confidence recovery: After 2 consecutive failures, insert easier card from strong tags
+- Session modes: smart (adaptive), due-only (traditional), tag-focus (specific tag)
+- Tag weakness tracking uses 7-day rolling window with trend analysis
+- GameHub now shows 4 featured games in 2x2 grid
+
+**Verification:**
+- All 33 new curriculum tests pass
+- TypeScript type check passes
+- Smart Session accessible from GameHub
+- Configuration screen renders all options
+- Review UI matches standard Review page
+- Session summary shows all metrics and insights
+
+---
+
+## 3.1 Conversational Practice Mode (Infrastructure)
+**Completed:** 2026-01-08T17:50:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/LLM_RESEARCH.md — Comprehensive LLM provider evaluation comparing OpenAI GPT-4o-mini, Anthropic Claude 3.5 Haiku, and Ollama/Llama local models with pricing, latency, and capability comparison
+
+**LLM Client Abstraction:**
+- src/lib/llm.ts — Multi-provider LLM client with:
+  - `LLMProvider` interface with `sendMessage()` and `streamMessage()` methods
+  - `OpenAIProvider` — GPT-4o-mini adapter with streaming SSE support
+  - `AnthropicProvider` — Claude Haiku adapter with Anthropic API format
+  - `OllamaProvider` — Local model adapter for privacy mode
+  - `createLLMProvider()` — Factory function for provider instantiation
+  - `getBestAvailableProvider()` — Auto-detect configured providers
+  - API key storage/retrieval from localStorage
+  - Error handling with `LLMError` class (rate_limit, invalid_key, network, etc.)
+  - Retry helper with exponential backoff
+
+**Conversation Prompts:**
+- src/prompts/conversation.ts — Character personas and prompt engineering:
+  - `CharacterPersona` interface with name, avatar, personality, topics
+  - `CHARACTERS` array with María (friendly neighbor) as POC character
+  - `buildSystemPrompt()` — Generates LLM system prompt with vocabulary constraints
+  - `extractNewWordFromResponse()` — Detects new vocabulary introduced by AI
+  - `isPrimarilyEnglish()` — Detects if user wrote in English
+  - `CONVERSATION_LIMITS` — POC limits (5 turns, 500 tokens, 10/day)
+  - Difficulty levels: beginner, intermediate, advanced
+
+**Vocabulary Extraction:**
+- src/utils/vocabExtract.ts — Extract user's known vocabulary from cards:
+  - `getMasteryLevel()` — Classify cards as learning/familiar/mastered
+  - `extractWordFromCard()` — Get Spanish word from BASIC/VERB/CLOZE cards
+  - `extractWordsFromSentence()` — Parse words with stopword filtering
+  - `extractVocabulary()` — Get VocabItem array with mastery levels
+  - `buildVocabContext()` — Generate comma-separated vocab string for prompts
+- src/utils/vocabExtract.test.ts — 22 unit tests for vocabulary extraction
+
+**Conversation Tracking:**
+- src/utils/conversationReview.ts — Track conversation sessions and learned words:
+  - `recordConversationSession()` — Save completed sessions to localStorage
+  - `LearnedWord` interface for words introduced during conversations
+  - `getConversationStats()` — Aggregate statistics
+  - `canStartConversation()` — Check daily limit (10/day)
+  - `getFlashcardSuggestions()` — Convert learned words to card suggestions
+
+**UI Components:**
+- src/components/ChatSession.tsx — Core chat interface:
+  - Real-time streaming message display
+  - Typing indicator with animated dots
+  - Turn counter showing progress to limit
+  - New word highlighting when AI introduces vocabulary
+  - English detection with Spanish encouragement
+  - Error states with retry capability
+  - Session end handling
+- src/pages/Conversation.tsx — Full conversation page with:
+  - Provider setup (OpenAI/Anthropic selection, API key input)
+  - Character selection screen
+  - Difficulty level selector
+  - Vocabulary summary showing card count
+  - Cost estimates for API usage
+  - Help links to get API keys
+
+**Navigation:**
+- src/types/index.ts — Added 'conversation' to Page type
+- src/components/GameHub.tsx — Added Conversation as featured game (second position)
+- src/App.tsx — Added ConversationPage import and route
+
+**Implementation Notes:**
+- Primary provider: OpenAI GPT-4o-mini (~$0.001/conversation)
+- Secondary provider: Anthropic Claude Haiku (~$0.004/conversation)
+- Optional: Ollama for local/privacy mode
+- API keys stored in localStorage (client-side only for POC)
+- Streaming responses for better UX
+- Vocabulary constraints in system prompt guide AI to use known words
+- New word introduction format: "[word] - it means [meaning]"
+- Session limits: 5 turns max, 500 tokens per response
+- Featured in GameHub 2x2 grid (replacing Matching as featured)
+
+**Deferred Items:**
+- Speech recognition integration (requires Web Speech API)
+- Pronunciation feedback
+- Backend proxy for API key security
+- More character personas
+- Conversation history in Stats page
+
+**Verification:**
+- All 339 unit tests pass (22 new for vocab extraction)
+- TypeScript type check passes
+- Build compiles successfully
+- Conversation accessible from GameHub
+- Provider setup screen renders correctly
+- Character selection and difficulty work
+- Chat session UI displays messages and streaming
+
+---
+
+## 3.2 Pronunciation Challenge Mode (Infrastructure)
+**Completed:** 2026-01-08T18:35:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/SPEECH_RESEARCH.md — Comprehensive speech recognition research comparing Web Speech API, OpenAI Whisper, Azure Speech Services, and local Whisper with recommendations
+
+**Audio Recording:**
+- src/hooks/useAudioRecorder.ts — Audio recording hook with:
+  - `startRecording()` / `stopRecording()` / `cancelRecording()` methods
+  - Real-time audio level monitoring (0-1 scale)
+  - Waveform data extraction for visualization
+  - Duration tracking
+  - Error handling for permission denied, no device, not supported
+  - MediaRecorder with WebM/MP4 output
+
+**Speech Recognition:**
+- src/utils/speechRecognition.ts — Speech recognition service with:
+  - `recognizeSpeech()` — Single-shot recognition
+  - `createSpeechSession()` — Reusable recognition session
+  - `comparePronunciation()` — Compare expected vs transcribed text
+  - `calculateSimilarity()` — Levenshtein distance-based similarity
+  - `normalizeSpanish()` — Accent and punctuation normalization
+  - `speakSpanish()` — Text-to-speech for native pronunciation
+  - Spanish dialect support (es-ES, es-MX, es-AR, es-CO)
+
+**Visualization Components:**
+- src/components/WaveformVisualizer.tsx:
+  - `WaveformVisualizer` — Canvas-based waveform display
+  - `AudioLevelIndicator` — Simple level bar
+  - `WaveformBars` — Animated vertical bars
+  - `RecordingIndicator` — Combined duration + level display
+
+**Pronunciation UI:**
+- src/components/PronunciationCard.tsx — Single word practice card with:
+  - Listen button (native TTS pronunciation)
+  - Record button with real-time waveform
+  - Result display (pass/fail with similarity percentage)
+  - Try again / next word controls
+  - Error handling for unsupported browsers
+
+- src/pages/Pronunciation.tsx — Full practice session:
+  - Setup screen with word count slider (5-20)
+  - Progress bar during session
+  - Results summary with per-word breakdown
+  - Score calculation and encouragement messages
+  - Browser support detection with fallback message
+
+**Navigation:**
+- src/types/index.ts — Added 'pronunciation' to Page type
+- src/components/GameHub.tsx — Added Pronunciation to games list
+- src/App.tsx — Added Pronunciation import and route
+
+**Implementation Notes:**
+- Uses Web Speech API (free, simple) as recommended in research
+- Chrome/Edge only (Firefox not supported)
+- Fuzzy matching with Levenshtein distance (70% threshold)
+- Real-time waveform visualization during recording
+- Audio level monitoring for visual feedback
+- Spanish dialect configurable (defaults to es-ES)
+- Session results tracked per word (attempts, similarity)
+
+**Deferred Items:**
+- Whisper API integration (premium accuracy)
+- Azure Pronunciation Assessment (phoneme feedback)
+- Pronunciation history tracking
+- Detailed phoneme-level feedback
+- Per-word pronunciation scores in card history
+
+**Verification:**
+- All 339 tests pass (no new tests for browser APIs)
+- TypeScript type check passes
+- Build compiles successfully (671KB bundle)
+- Pronunciation accessible from GameHub
+- Setup screen shows word count selection
+- Browser support detection works
+- Recording UI shows waveform and level
+
+---
+
+## Moonshot Phase 1: Browser Extension (Infrastructure)
+**Completed:** 2026-01-08T19:00:00Z
+**Files Changed:**
+
+**Extension Core:**
+- extension/manifest.json — Chrome Manifest V3 configuration with permissions for storage, activeTab, all URLs; content scripts, background service worker, popup, and options page
+- extension/background.js — Service worker handling:
+  - Vocabulary sync from VocabLoop cloud API
+  - Local vocabulary import from VocabLoop app
+  - Chrome storage management for vocabulary cache
+  - Alarm-based periodic sync (every 30 minutes)
+  - Message passing between popup/content scripts
+  - Pending words queue for offline operation
+- extension/content.js — Content script for page highlighting:
+  - DOM tree walker for text node processing
+  - Vocabulary word matching with mastered/learning/unknown levels
+  - Dynamic highlighting with performance batching
+  - Hover tooltips showing English translations
+  - Click handler for unknown words with "Add to VocabLoop" popup
+  - MutationObserver for dynamically loaded content
+  - Toggle support for enabling/disabling highlights
+
+**Styles:**
+- extension/content.css — Highlight styles:
+  - Green background for mastered words (interval >= 21)
+  - Yellow background for learning words (interval 1-20)
+  - Dotted underline for unknown Spanish words
+  - Hover tooltips with translations (CSS pseudo-elements)
+  - Add word popup styling
+  - Dark mode support via prefers-color-scheme
+
+**Popup UI:**
+- extension/popup.html — Extension popup interface
+- extension/popup.css — Popup styling with toggles, stats cards, sync status
+- extension/popup.js — Popup functionality:
+  - Vocabulary stats display (mastered/learning counts)
+  - Sync button with loading state
+  - Highlighting toggle
+  - Translation tooltip toggle
+  - Connection status (connect/disconnect VocabLoop account)
+  - Settings panel navigation
+
+**Settings:**
+- extension/options.html — Full settings page with:
+  - API URL configuration
+  - Auth token input
+  - All toggle options
+  - Save/reset functionality
+
+**Assets:**
+- extension/icons/ — Placeholder PNG icons (16, 48, 128px)
+- extension/icons/generate-icons.js — Node.js script to generate proper icons
+- extension/README.md — Extension documentation with installation, setup, and development instructions
+
+**Implementation Notes:**
+- Manifest V3 compliant (modern Chrome extension format)
+- Service worker for background operations (no persistent background page)
+- Content script injects CSS and scans text nodes
+- Performance optimized with request animation frame batching
+- Vocabulary categorized by SRS interval:
+  - Mastered: interval >= 21 days (green)
+  - Learning: interval 1-20 days (yellow)
+  - Unknown: detected Spanish word not in deck (underline)
+- Hover shows English translation tooltip
+- Click unknown word to add to VocabLoop deck
+- Supports offline operation with pending word queue
+- Auto-sync every 30 minutes when connected
+- Dark mode support via CSS media query
+
+**Deferred Items:**
+- Chrome Web Store packaging and submission
+- Production icon design
+- End-to-end testing on Spanish news sites
+- Firefox compatibility (requires manifest modifications)
+- Safari extension port
+
+**Verification:**
+- Extension structure complete
+- Manifest validates correctly
+- All scripts and styles in place
+- Placeholder icons created
+- Ready for developer mode testing in Chrome
+
+---
+
+## Moonshot Phase 2: Mobile Framework Research
+**Completed:** 2026-01-08T19:15:00Z
+**Files Changed:**
+
+- docs/MOBILE_RESEARCH.md — Comprehensive mobile framework evaluation
+
+**Summary:**
+- Compared React Native, Capacitor, and PWA-only approaches
+- Evaluated code sharing potential, native feature access, and development effort
+- Created feature comparison matrix
+
+**Recommendation:** Capacitor
+- 95%+ code sharing with existing React app
+- 40-60 hours estimated effort (vs 80-120 for React Native)
+- Adequate performance for flashcard app
+- Native widgets still require platform-specific code (unavoidable)
+
+**Implementation Plan:**
+1. Phase 1: Basic app wrapping (10-15 hours)
+2. Phase 2: Push notifications (8-12 hours)
+3. Phase 3: Background sync (5-8 hours)
+4. Phase 4: Native widgets (15-20 hours)
+5. Phase 5: App store prep (5-10 hours)
+
+**Note:** Actual Capacitor setup and native features require Xcode/Android Studio and platform SDKs, which are outside the scope of this implementation.
+
+---
+
+## Moonshot Phase 2: Capacitor Project Setup
+**Completed:** 2026-01-08T22:20:00Z
+**Files Changed:**
+
+**Capacitor Configuration:**
+- capacitor.config.ts — Full Capacitor configuration with:
+  - App ID: com.vocabloop.app
+  - iOS and Android platform settings
+  - Splash screen configuration (emerald background)
+  - Status bar configuration
+  - Keyboard behavior settings
+  - Push and local notification configuration
+
+**Native Integration:**
+- src/utils/native.ts — Platform integration utility with:
+  - Platform detection (isNativePlatform, getPlatform)
+  - Splash screen control (hideSplashScreen)
+  - Status bar styling (setStatusBarStyle)
+  - Keyboard listeners (addKeyboardListeners)
+  - App state listeners (foreground/background)
+  - Back button listener (Android)
+  - Preferences API wrapper
+  - Push notification setup and listeners
+  - Local notification scheduling for review reminders
+  - Daily reminder scheduling
+  - Platform initialization function
+
+- src/hooks/useNative.ts — React hooks for native features:
+  - useNative — Main hook with platform info and notification actions
+  - useBackButton — Android back button handler
+  - useAppState — Track foreground/background state
+  - useKeyboardHeight — Keyboard height for UI adjustment
+
+**Resources:**
+- resources/README.md — Guide for creating app icons and splash screens
+
+**Dependencies Added:**
+- @capacitor/core, @capacitor/cli — Core Capacitor framework
+- @capacitor/splash-screen — Splash screen control
+- @capacitor/status-bar — Status bar styling
+- @capacitor/keyboard — Keyboard events
+- @capacitor/app — App lifecycle events
+- @capacitor/preferences — Cross-platform storage
+- @capacitor/push-notifications — Push notification support
+- @capacitor/local-notifications — Local notification scheduling
+
+**Implementation Notes:**
+- Capacitor integrated into main project (not separate mobile/ directory)
+- Web app can be wrapped with `npx cap add ios` and `npx cap add android`
+- Native utilities gracefully fall back when running in browser
+- Review reminder notifications pre-built and ready to use
+- Status bar automatically matches dark/light mode
+
+**Deferred (requires platform SDKs):**
+- Adding iOS platform (requires Xcode)
+- Adding Android platform (requires Android Studio)
+- Building native binaries
+- Testing on physical devices
+
+**Verification:**
+- TypeScript compilation passes
+- All 339 tests pass
+- Build succeeds (671KB bundle)
+- Capacitor config file created successfully
+
+---
+
+## Moonshot Phase 3: Widget SDK Design
+**Completed:** 2026-01-08T22:30:00Z
+**Files Changed:**
+
+- docs/WIDGET_SDK.md — Comprehensive SDK design document
+
+**Widget Types Defined:**
+1. **Inline Word Highlight** — Highlight Spanish words on any webpage by knowledge level
+2. **Popup Card** — Modal flashcard with translation, audio, and grading
+3. **Mini Review Widget** — Compact review session (small/medium/large sizes)
+4. **Vocabulary Badge** — Display user stats as embeddable badge
+
+**JavaScript Embed API:**
+- Initialization with API key or anonymous mode
+- Core methods: getVocabulary, isKnown, addWord, recordReview, getStats
+- Event system: ready, authenticated, word-added, review-complete, error
+- Widget embedding: highlight, showCard, embed, badge
+
+**OAuth 2.0 Flow:**
+- Standard authorization code flow
+- Defined scopes: vocabulary:read/write, reviews:read/write, stats:read, profile:read
+- Token refresh support
+
+**Pricing Tiers:**
+- Free: 100 req/min, read-only, attribution required
+- Developer ($29/mo): 1,000 req/min, full features, custom theming
+- Business ($199/mo): 10,000 req/min, white-label, analytics, SLA
+- Enterprise (custom): Unlimited, on-premise option
+
+**Technical Architecture:**
+- CDN distribution via CloudFlare
+- API endpoints for vocabulary and reviews
+- Iframe sandbox with postMessage communication
+- Security: domain-restricted API keys, CSP headers, XSS prevention
+
+**Example Integrations:**
+- News website sidebar widget
+- E-book reader with word highlighting
+- Video subtitle overlay during pauses
+
+**Implementation Roadmap:**
+1. Core Infrastructure (4-6 weeks)
+2. Widgets (4-6 weeks)
+3. Partner Integrations (ongoing)
+4. Analytics & Growth (ongoing)
+
+---
+
+## Moonshot Phase 3: Skill Tree Gamification
+**Completed:** 2026-01-08T22:35:00Z
+**Files Changed:**
+
+**Documentation:**
+- docs/SKILL_TREE.md — Comprehensive skill tree design document with:
+  - 9 skill categories (Vocabulary, Consistency, Precision, Speed, Mastery, Explorer, Social, Conversationalist, Pronunciation)
+  - 35+ individual skills with tiered requirements
+  - XP and leveling system design
+  - Badge display and featured badges
+  - Visual skill tree layout
+  - Progress tracking data model
+
+**Implementation:**
+- src/utils/skills.ts — Skill tree logic:
+  - Type definitions (SkillCategory, Skill, SkillProgress, UserSkillState)
+  - SKILL_CATEGORIES constant with all category and skill definitions
+  - localStorage persistence (getSkillState, saveSkillState)
+  - Progress calculation (checkSkillProgress, calculateProgress)
+  - Helper functions (getSkillById, getCategoryById, getUnlockedSkills)
+  - Level calculation from XP
+  - Featured badges management
+
+- src/components/SkillTree.tsx — Visual skill tree UI:
+  - Full-screen modal with category grid
+  - Category detail view with individual skills
+  - Progress bars for in-progress skills
+  - Unlocked/locked skill states
+  - Featured badge selection (star button)
+  - XP and level display
+  - Badge component for use elsewhere
+
+**Skill Categories:**
+1. Vocabulario — Word learning milestones (50-2500 words)
+2. Consistencia — Streak achievements (3-365 days)
+3. Precisión — Accuracy milestones (80-95%)
+4. Velocidad — Speed achievements (<3s to <1s avg)
+5. Maestría — Mastery milestones (25-1000 mastered words)
+6. Explorador — Feature usage achievements
+7. Social — Multiplayer achievements
+8. Conversador — AI conversation achievements
+9. Pronunciación — Pronunciation practice achievements
+
+**XP System:**
+- Tier 1: 100 XP
+- Tier 2: 250 XP
+- Tier 3: 500 XP
+- Tier 4: 1000 XP
+- Tier 5: 2500 XP
+
+**Verification:**
+- TypeScript compilation passes
+- All 339 tests pass
+- Build succeeds
+- Skill categories and requirements defined
+- UI component renders correctly
+
+---
+
+## Moonshot Phase 3: Widget SDK Implementation
+**Completed:** 2026-01-08T23:55:00Z
+**Files Changed:**
+
+**SDK Package Structure:**
+- sdk/package.json — NPM package configuration with build scripts, peer dependencies (React 17+)
+- sdk/tsconfig.json — TypeScript configuration for SDK
+- sdk/rollup.config.js — Rollup bundler config for ESM, CJS, and UMD builds
+
+**Type Definitions:**
+- sdk/src/types/index.ts — Complete type definitions:
+  - VocabLoopConfig for SDK initialization
+  - Widget configs: MiniReviewConfig, BadgeConfig, HighlightConfig, CardPopupConfig
+  - Event types: VocabLoopEvent, VocabLoopEventData
+  - Data types: VocabWord, VocabStats, WidgetTheme
+
+**Utilities:**
+- sdk/src/utils/api.ts — API client for SDK:
+  - APIClient class with auth, vocabulary CRUD, stats, and review methods
+  - Token management and storage
+  - Request helpers with error handling
+  - initAPIClient/getAPIClient singleton pattern
+
+- sdk/src/utils/events.ts — Event emitter:
+  - Typed event emission and handling
+  - on/off/emit/removeAllListeners methods
+  - Error-safe handler execution
+
+**React Components:**
+- sdk/src/components/MiniReview.tsx — Compact review widget:
+  - Three sizes: small, medium, large
+  - Card flipping with translation reveal
+  - Grade buttons (Again/Hard/Good/Easy)
+  - Progress indicator
+  - Session completion callback
+
+- sdk/src/components/VocabBadge.tsx — Stats badge widget:
+  - Three sizes: icon, compact, full
+  - Displays word count, mastered count, streak
+  - Animated appearance
+  - Customizable theming
+
+- sdk/src/components/WordHighlight.tsx — Inline highlighting:
+  - Three styles: underline, background, bold
+  - Vocabulary matching with word boundaries
+  - Click handler for popup/add actions
+  - Hover effects
+  - Popup card on click
+
+- sdk/src/components/CardPopup.tsx — Modal flashcard:
+  - Flip animation (Space/click to reveal)
+  - Grade buttons for review
+  - Context/example display
+  - Keyboard shortcuts (Escape to close)
+  - showCardPopup() standalone function
+
+- sdk/src/components/index.ts — Component exports
+
+**Main Entry Point:**
+- sdk/src/index.ts — SDK main entry:
+  - VocabLoop.init() for initialization
+  - VocabLoop.destroy() for cleanup
+  - Event methods: on/off
+  - Widget rendering: renderMiniReview, renderBadge, renderHighlight, showCard
+  - Data methods: getStats, getVocabulary, addWord
+  - React component exports for direct usage
+  - UMD global export for script tag usage
+  - Version tracking
+
+**Build Configuration:**
+- Rollup outputs:
+  - dist/index.esm.js — ES modules for bundlers
+  - dist/index.js — CommonJS for Node
+  - dist/vocabloop.umd.js — UMD for script tags
+  - dist/vocabloop.umd.min.js — Minified UMD
+
+**Implementation Notes:**
+- SDK designed for third-party integration
+- API client handles authentication handshake
+- All components use consistent theming
+- Event system allows listening to SDK events
+- UMD build enables CDN script tag usage
+- React components exported for React integrators
+- Peer dependencies: React 17+
+
+**Deferred Items:**
+- Build demo integration site
+- npm publish workflow
+- CDN deployment
+- Documentation site
+
+**Verification:**
+- All 339 tests pass
+- Main app build succeeds
+- TypeScript compilation passes
+- SDK files created correctly
+
+---
+
+## Moonshot Phase 3: Vocabulary Corpus Infrastructure
+**Completed:** 2026-01-08T23:58:00Z
+**Files Changed:**
+
+**Type Definitions:**
+- src/data/vocabulary/types.ts — Complete vocabulary type system:
+  - Domain enum (15 domains: general, travel, food, business, medical, legal, technology, etc.)
+  - Region enum (6 regions: neutral, spain, mexico, argentina, colombia, caribbean)
+  - Difficulty enum (CEFR levels: A1, A2, B1, B2, C1, C2)
+  - PartOfSpeech enum (10 types: noun, verb, adjective, etc.)
+  - VocabularyWord interface with 20+ fields
+  - DomainWordSet and VocabularyCorpus interfaces
+  - DIFFICULTY_DESCRIPTIONS, DOMAIN_INFO, REGION_INFO constants
+
+**Domain Vocabulary Modules:**
+- src/data/vocabulary/domains/travel.ts — 25 travel words (A1-B2)
+  - Airport, hotel, transport, booking, customs vocabulary
+  - Regional variants (billete/boleto/pasaje, maleta/petaca/valija)
+
+- src/data/vocabulary/domains/food.ts — 30 food & dining words (A1-B2)
+  - Meals, ingredients, cooking, restaurant vocabulary
+  - Regional variants (camarero/mesero/mozo)
+
+- src/data/vocabulary/domains/medical.ts — 35 medical words (A1-C1)
+  - Symptoms, treatments, hospital, specialists vocabulary
+  - Regional variants (resfriado/gripa/constipado)
+
+- src/data/vocabulary/domains/business.ts — 35 business words (A2-C1)
+  - Work, finance, commerce, corporate vocabulary
+
+- src/data/vocabulary/domains/index.ts — Domain exports and utilities
+
+**Main Vocabulary Index:**
+- src/data/vocabulary/index.ts — Corpus management:
+  - VOCABULARY_CORPUS constant
+  - filterByDifficulty(), filterByDomain(), filterByRegion()
+  - sortByFrequency(), getWordsUpToLevel()
+  - searchVocabulary(), getVocabularyStats()
+  - toFrequencyListFormat() for backwards compatibility
+  - getRandomWords() with filtering options
+
+**Enhanced Word Features:**
+- Frequency rankings (1-10000 scale)
+- CEFR difficulty levels (A1-C2)
+- Multiple English translations
+- Example sentences with translations
+- Regional variants with notes
+- Part of speech
+- Gender for nouns
+- Irregular flag for verbs
+- Collocations
+- Related words
+- IPA pronunciation field
+- Audio file reference
+
+**Word Counts by Domain:**
+- Travel: 25 words
+- Food: 30 words
+- Medical: 35 words
+- Business: 35 words
+- Total: ~125 enhanced words
+
+**Implementation Notes:**
+- Infrastructure ready for expanding to 50,000 words
+- Each word has comprehensive metadata for advanced features
+- Regional variants track Spain, Mexico, Argentina, Colombia, Caribbean differences
+- Backwards compatible with existing frequency.json format via toFrequencyListFormat()
+- Filtering utilities enable Smart Session integration
+
+**Deferred:**
+- Expanding corpus to 50,000 words (data collection ongoing)
+- Additional domains (legal, technology, academic, sports, arts, nature, family, emotions, time, numbers)
+- IPA pronunciation data
+- Audio file generation
+- Integration with existing frequency.json
+
+**Verification:**
+- All 339 tests pass
+- TypeScript compilation passes
+- Build succeeds (671KB bundle)
+- Vocabulary module exports correctly
+
+---
